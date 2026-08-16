@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#08090b" />
+
+    <!-- ================= SEO ================= -->
+    <title>Precision Automotive Brasil | Diagnóstico Automotivo em Curitiba</title>
+    <meta name="description" content="Diagnóstico eletrônico automotivo, scanner multimarcas, codificação e personalização em Curitiba, Araucária e região." />
+    <meta name="keywords" content="diagnóstico automotivo, scanner multimarcas, codificação de módulos, personalização, Curitiba, Araucária" />
+    <meta name="author" content="Precision Automotive Brasil" />
+    <link rel="canonical" href="https://precisionautomotive.com.br/" />
+
+    <!-- ================= Open Graph ================= -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Precision Automotive Brasil | Diagnóstico Automotivo em Curitiba" />
+    <meta property="og:description" content="Tecnologia, experiência e diagnóstico eletrônico para descobrir o que realmente acontece com o seu veículo." />
+    <meta property="og:image" content="assets/images/hero-tech.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- ================= Favicon ================= -->
+    <link rel="icon" type="image/png" href="assets/images/logo-circle.png" />
+    <link rel="apple-touch-icon" href="assets/images/logo-circle.png" />
+
+    <!-- ================= Fonts ================= -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- ================= Styles ================= -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <!-- ============================================================= -->
+    <!-- PROGRESS BAR                                                   -->
+    <!-- ============================================================= -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ============================================================= -->
+    <!-- HEADER                                                        -->
+    <!-- ============================================================= -->
+    <header class="header" id="header" data-testid="site-header">
+      <div class="topbar" data-testid="topbar">
+        <div class="topbar-inner container">
+          <span class="topbar-item"><i class="ico ico-receipt"></i> Emitimos Nota Fiscal</span>
+          <span class="topbar-sep"></span>
+          <span class="topbar-item topbar-cnpj">CNPJ 68.332.596/0001-60</span>
+          <span class="topbar-sep topbar-hide"></span>
+          <span class="topbar-item topbar-tag">Tecnologia • Precisão • Confiança</span>
+        </div>
+      </div>
+      <div class="header-inner">
+        <a href="#inicio" class="brand" data-testid="brand-logo">
+          <img src="assets/images/logo-circle.png" alt="Precision Automotive Brasil" class="brand-mark" />
+          <span class="brand-text">
+            <span class="brand-top">PRECISION</span>
+            <span class="brand-bottom">AUTOMOTIVE</span>
+          </span>
+        </a>
+
+        <nav class="nav" id="nav" data-testid="main-nav">
+          <a href="#inicio" class="nav-link">Início</a>
+          <a href="#servicos" class="nav-link">Serviços</a>
+          <a href="#marcas" class="nav-link">Marcas</a>
+          <a href="#diferenciais" class="nav-link">Diferenciais</a>
+          <a href="#como-funciona" class="nav-link">Como funciona</a>
+          <a href="#contato" class="nav-link">Contato</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#" class="btn btn-ghost btn-sm btn-call" data-tel data-testid="header-call-btn">
+            <i class="ico ico-phone"></i><span>Ligar</span>
+          </a>
+          <a href="#" class="btn btn-wa btn-sm" data-wa data-testid="header-whatsapp-btn">
+            <i class="ico ico-wa"></i><span>Falar no WhatsApp</span>
+          </a>
+          <button class="hamburger" id="hamburger" aria-label="Abrir menu" data-testid="hamburger-btn">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu" data-testid="mobile-menu">
+      <a href="#inicio" class="m-link">Início</a>
+      <a href="#servicos" class="m-link">Serviços</a>
+      <a href="#marcas" class="m-link">Marcas</a>
+      <a href="#diferenciais" class="m-link">Diferenciais</a>
+      <a href="#como-funciona" class="m-link">Como funciona</a>
+      <a href="#contato" class="m-link">Contato</a>
+      <a href="#" class="btn btn-wa btn-block" data-wa data-testid="mobile-whatsapp-btn">
+        <i class="ico ico-wa"></i><span>Falar no WhatsApp</span>
+      </a>
+      <a href="#" class="btn btn-ghost btn-block btn-call" data-tel data-testid="mobile-call-btn">
+        <i class="ico ico-phone"></i><span>Ligar agora</span>
+      </a>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- HERO                                                          -->
+    <!-- ============================================================= -->
+    <section class="hero" id="inicio" data-testid="hero-section">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="grid-lines"></div>
+        <div class="glow glow-a"></div>
+        <div class="glow glow-b"></div>
+      </div>
+
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <span class="eyebrow reveal" data-testid="hero-eyebrow"><i class="dot"></i>Diagnóstico eletrônico automotivo</span>
+
+          <h1 class="hero-title" data-testid="hero-title">
+            <span class="line"><span class="line-in">Diagnóstico</span></span>
+            <span class="line"><span class="line-in">automotivo com</span></span>
+            <span class="line"><span class="line-in accent">precisão.</span></span>
+          </h1>
+
+          <p class="hero-sub reveal">
+            Tecnologia, experiência e diagnóstico eletrônico para descobrir o que
+            realmente acontece com o seu veículo.
+          </p>
+
+          <div class="hero-region reveal" data-testid="hero-region">
+            <span>Curitiba</span><i class="sep"></i><span>Araucária</span><i class="sep"></i><span>Região Metropolitana</span>
+          </div>
+
+          <div class="hero-cta reveal">
+            <a href="#" class="btn btn-primary btn-lg" data-wa data-testid="hero-primary-btn">
+              SOLICITAR ATENDIMENTO <i class="ico ico-arrow"></i>
+            </a>
+            <a href="#servicos" class="btn btn-ghost btn-lg" data-testid="hero-secondary-btn">CONHECER SERVIÇOS</a>
+          </div>
+        </div>
+
+        <!-- DIAGNOSTIC PANEL -->
+        <div class="hero-panel reveal" data-testid="diagnostic-panel">
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title"><span class="live"></span> DIAGNÓSTICO EM TEMPO REAL</div>
+              <div class="panel-id">PA-SCAN v3</div>
+            </div>
+
+            <div class="panel-modules">
+              <div class="mod ok"><span class="mod-name">ECU</span><span class="mod-status">OK</span></div>
+              <div class="mod ok"><span class="mod-name">ABS</span><span class="mod-status">OK</span></div>
+              <div class="mod warn"><span class="mod-name">AIRBAG</span><span class="mod-status">SCAN</span></div>
+              <div class="mod ok"><span class="mod-name">TCM</span><span class="mod-status">OK</span></div>
+              <div class="mod ok"><span class="mod-name">BCM</span><span class="mod-status">OK</span></div>
+              <div class="mod ok"><span class="mod-name">CAN</span><span class="mod-status">BUS</span></div>
+            </div>
+
+            <div class="panel-graph">
+              <div class="graph-label">SINAL CAN-BUS</div>
+              <svg viewBox="0 0 300 70" preserveAspectRatio="none" class="wave">
+                <polyline id="waveLine" fill="none" points="" />
+              </svg>
+            </div>
+
+            <div class="panel-readout">
+              <div class="ro"><span class="ro-k">VOLTAGEM</span><span class="ro-v" data-metric="volt">13.8<small>V</small></span></div>
+              <div class="ro"><span class="ro-k">RPM</span><span class="ro-v" data-metric="rpm">840</span></div>
+              <div class="ro"><span class="ro-k">TEMP</span><span class="ro-v" data-metric="temp">89<small>°C</small></span></div>
+              <div class="ro"><span class="ro-k">CÓDIGOS</span><span class="ro-v" data-metric="dtc">02</span></div>
+            </div>
+
+            <div class="panel-foot"><span class="scan-line"></span>DIAGNÓSTICO CONCLUÍDO — 128 PARÂMETROS LIDOS</div>
+          </div>
+          <div class="panel-badge">CAN • K-LINE • DoIP</div>
+        </div>
+      </div>
+
+      <a href="#servicos" class="scroll-hint" aria-label="Rolar para baixo"><span></span></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" data-testid="marquee">
+      <div class="marquee-track">
+        <span>DIAGNÓSTICO ELETRÔNICO</span><i>◆</i><span>SCANNER MULTIMARCAS</span><i>◆</i><span>CODIFICAÇÃO</span><i>◆</i><span>PERSONALIZAÇÃO</span><i>◆</i><span>DIAGNÓSTICO AVANÇADO</span><i>◆</i>
+        <span>DIAGNÓSTICO ELETRÔNICO</span><i>◆</i><span>SCANNER MULTIMARCAS</span><i>◆</i><span>CODIFICAÇÃO</span><i>◆</i><span>PERSONALIZAÇÃO</span><i>◆</i><span>DIAGNÓSTICO AVANÇADO</span><i>◆</i>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- SERVIÇOS                                                      -->
+    <!-- ============================================================= -->
+    <section class="section" id="servicos" data-testid="services-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">01 — Serviços</span>
+          <h2 class="section-title">Soluções para o seu veículo</h2>
+          <p class="section-sub">Diagnóstico preciso para veículos modernos.</p>
+        </header>
+
+        <div class="cards-grid" id="servicesGrid" data-testid="services-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- PREÇOS   (VALORES EDITÁVEIS EM js/script.js -> CONFIG.pricing) -->
+    <!-- ============================================================= -->
+    <section class="section section-alt" id="precos" data-testid="pricing-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">02 — Preços</span>
+          <h2 class="section-title">Investimento com transparência</h2>
+          <p class="section-sub">Valores de referência. Personalizados conforme o serviço.</p>
+        </header>
+
+        <div class="pricing-grid" id="pricingGrid" data-testid="pricing-grid"></div>
+
+        <p class="pricing-note reveal">
+          <i class="ico ico-info"></i>
+          O valor pode variar conforme veículo, sistema e complexidade do serviço.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- MARCAS                                                        -->
+    <!-- ============================================================= -->
+    <section class="section" id="marcas" data-testid="brands-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">03 — Marcas</span>
+          <h2 class="section-title">Especialistas em diversas marcas</h2>
+          <p class="section-sub">Cobertura multimarcas para veículos nacionais e importados.</p>
+        </header>
+        <div class="brands-grid" id="brandsGrid" data-testid="brands-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- DIFERENCIAIS                                                  -->
+    <!-- ============================================================= -->
+    <section class="section section-alt" id="diferenciais" data-testid="differentials-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">04 — Diferenciais</span>
+          <h2 class="section-title">Por que escolher a Precision?</h2>
+          <p class="section-sub">Diagnóstico sério, baseado em dados e tecnologia.</p>
+        </header>
+        <div class="diff-grid" id="diffGrid" data-testid="diff-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SEÇÃO TECNOLÓGICA (SHOWPIECE)                                 -->
+    <!-- ============================================================= -->
+    <section class="section tech-section" id="tecnologia" data-testid="tech-section">
+      <div class="tech-glow" aria-hidden="true"></div>
+      <div class="container tech-wrap">
+        <div class="tech-copy reveal">
+          <span class="kicker">05 — Tecnologia</span>
+          <h2 class="section-title tech-title">A eletrônica do seu veículo fala.<br /><span class="accent">Nós interpretamos.</span></h2>
+          <p class="section-sub">
+            Mapeamos a comunicação entre os módulos, lemos os parâmetros em tempo
+            real e identificamos exatamente onde está a falha — sem achismo.
+          </p>
+          <a href="#contato" class="btn btn-primary" data-testid="tech-cta">Fazer meu diagnóstico</a>
+        </div>
+
+        <div class="tech-diagram reveal" data-testid="tech-diagram">
+          <svg viewBox="0 0 460 420" class="net" preserveAspectRatio="xMidYMid meet">
+            <!-- connection lines -->
+            <g class="net-lines" stroke="rgba(225,18,28,.35)" stroke-width="1.4" fill="none">
+              <path class="wire" d="M230,210 L230,70" />
+              <path class="wire" d="M230,210 L90,140" />
+              <path class="wire" d="M230,210 L370,140" />
+              <path class="wire" d="M230,210 L90,290" />
+              <path class="wire" d="M230,210 L370,290" />
+              <path class="wire" d="M230,210 L230,350" />
+            </g>
+            <!-- data pulses -->
+            <g class="pulses" fill="#ff2a33">
+              <circle r="3.2" class="pulse"><animateMotion dur="2.2s" repeatCount="indefinite" path="M230,210 L230,70" /></circle>
+              <circle r="3.2" class="pulse"><animateMotion dur="2.6s" repeatCount="indefinite" path="M230,210 L90,140" /></circle>
+              <circle r="3.2" class="pulse"><animateMotion dur="2.9s" repeatCount="indefinite" path="M230,210 L370,140" /></circle>
+              <circle r="3.2" class="pulse"><animateMotion dur="2.4s" repeatCount="indefinite" path="M230,210 L90,290" /></circle>
+              <circle r="3.2" class="pulse"><animateMotion dur="3.1s" repeatCount="indefinite" path="M230,210 L370,290" /></circle>
+              <circle r="3.2" class="pulse"><animateMotion dur="2.7s" repeatCount="indefinite" path="M230,210 L230,350" /></circle>
+            </g>
+          </svg>
+          <!-- module nodes -->
+          <span class="node node-core" style="left:50%;top:50%">CAN<small>GATEWAY</small></span>
+          <span class="node" style="left:50%;top:16%">ECU</span>
+          <span class="node" style="left:19%;top:33%">ABS</span>
+          <span class="node" style="left:81%;top:33%">SRS</span>
+          <span class="node" style="left:19%;top:69%">BCM</span>
+          <span class="node" style="left:81%;top:69%">TCM</span>
+          <span class="node" style="left:50%;top:83%">ESP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- COMO FUNCIONA                                                 -->
+    <!-- ============================================================= -->
+    <section class="section section-alt" id="como-funciona" data-testid="how-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">06 — Processo</span>
+          <h2 class="section-title">Como funciona</h2>
+          <p class="section-sub">Do primeiro contato ao resultado, com clareza.</p>
+        </header>
+        <div class="timeline" id="timeline" data-testid="timeline"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- REGIÃO DE ATENDIMENTO / MAPA                                  -->
+    <!-- ============================================================= -->
+    <section class="section region-section" id="regiao" data-testid="region-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">Atendimento</span>
+          <h2 class="section-title">Onde atendemos</h2>
+          <p class="section-sub">Curitiba, Araucária e toda a região metropolitana.</p>
+        </header>
+
+        <div class="region-wrap">
+          <div class="region-map reveal" data-testid="region-map">
+            <iframe
+              title="Área de atendimento — Curitiba e região metropolitana"
+              src="https://www.google.com/maps?q=Regi%C3%A3o+Metropolitana+de+Curitiba&z=10&output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <span class="region-pin"><i></i>Base: Curitiba / Araucária</span>
+          </div>
+
+          <div class="region-info reveal">
+            <h3>Cidades atendidas</h3>
+            <p class="region-desc">
+              Diagnóstico eletrônico para veículos modernos em Curitiba e cidades vizinhas.
+              Consulte a disponibilidade de atendimento móvel para a sua região.
+            </p>
+            <!-- CIDADES EDITÁVEIS EM CONFIG.regionCities (js/script.js) -->
+            <div class="region-chips" id="regionChips" data-testid="region-chips"></div>
+            <a href="#" class="btn btn-primary" data-wa
+               data-wa-msg="Olá! Vim pelo site da Precision Automotive. Vocês atendem na minha região? Minha cidade/bairro é: "
+               data-testid="region-wa-btn">Consultar minha região <i class="ico ico-wa"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- FORMULÁRIO / CONTATO                                          -->
+    <!-- ============================================================= -->
+    <section class="section" id="contato" data-testid="contact-section">
+      <div class="container form-wrap">
+        <div class="form-copy reveal">
+          <span class="kicker">07 — Orçamento</span>
+          <h2 class="section-title">Solicite seu orçamento</h2>
+          <p class="section-sub">
+            Preencha os dados abaixo. Ao enviar, geramos automaticamente uma
+            mensagem e abrimos o WhatsApp para você — sem cadastro.
+          </p>
+          <ul class="form-list">
+            <li><i class="ico ico-check"></i> Resposta rápida pelo WhatsApp</li>
+            <li><i class="ico ico-check"></i> Atendimento em Curitiba, Araucária e região</li>
+            <li><i class="ico ico-check"></i> Diagnóstico para veículos modernos</li>
+          </ul>
+        </div>
+
+        <form class="form" id="quoteForm" data-testid="quote-form" novalidate>
+          <div class="field">
+            <label for="f-nome">Nome</label>
+            <input id="f-nome" name="nome" type="text" placeholder="Seu nome" required data-testid="input-nome" />
+          </div>
+          <div class="field">
+            <label for="f-wa">WhatsApp</label>
+            <input id="f-wa" name="whatsapp" type="tel" placeholder="(41) 90000-0000" required data-testid="input-whatsapp" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-marca">Marca</label>
+              <input id="f-marca" name="marca" type="text" placeholder="Ex.: Volkswagen" data-testid="input-marca" />
+            </div>
+            <div class="field">
+              <label for="f-modelo">Modelo</label>
+              <input id="f-modelo" name="modelo" type="text" placeholder="Ex.: Golf GTI" data-testid="input-modelo" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-ano">Ano</label>
+              <input id="f-ano" name="ano" type="text" placeholder="Ex.: 2021" data-testid="input-ano" />
+            </div>
+            <div class="field">
+              <label for="f-servico">Serviço desejado</label>
+              <select id="f-servico" name="servico" data-testid="input-servico">
+                <option value="Diagnóstico Eletrônico">Diagnóstico Eletrônico</option>
+                <option value="Scanner Multimarcas">Scanner Multimarcas</option>
+                <option value="Codificação de Módulos">Codificação de Módulos</option>
+                <option value="Personalização">Personalização</option>
+                <option value="Diagnóstico Avançado">Diagnóstico Avançado</option>
+                <option value="Avaliação Eletrônica">Avaliação Eletrônica</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-desc">Descrição do problema</label>
+            <textarea id="f-desc" name="descricao" rows="3" placeholder="Descreva o sintoma, luz no painel, ruído, etc." data-testid="input-descricao"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" data-testid="submit-quote">
+            SOLICITAR ORÇAMENTO <i class="ico ico-wa"></i>
+          </button>
+          <p class="form-hint">Ao enviar, você será direcionado ao nosso WhatsApp.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- PROVA SOCIAL   (DEPOIMENTOS EDITÁVEIS EM CONFIG.testimonials)  -->
+    <!-- ============================================================= -->
+    <section class="section section-alt" id="depoimentos" data-testid="testimonials-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">08 — Confiança</span>
+          <h2 class="section-title">O que dizem nossos clientes</h2>
+        </header>
+        <div class="testi-grid" id="testiGrid" data-testid="testi-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- CTA FINAL                                                     -->
+    <!-- ============================================================= -->
+    <section class="cta-final" data-testid="cta-final">
+      <div class="cta-bg" aria-hidden="true"><div class="glow glow-c"></div></div>
+      <div class="container cta-inner reveal">
+        <h2 class="cta-title">Seu carro merece um<br /><span class="accent">diagnóstico preciso.</span></h2>
+        <p class="cta-sub">Não troque peças no escuro. Descubra primeiro o que realmente está acontecendo.</p>
+        <a href="#" class="btn btn-primary btn-xl" data-wa data-testid="cta-final-btn">
+          FALAR COM A PRECISION <i class="ico ico-wa"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- FOOTER                                                        -->
+    <!-- ============================================================= -->
+    <footer class="footer" data-testid="site-footer">
+      <div class="container footer-grid">
+        <div class="foot-brand">
+          <img src="assets/images/logo-circle.png" alt="Precision Automotive Brasil" class="foot-logo" />
+          <p class="foot-desc">Diagnóstico eletrônico automotivo, scanner multimarcas, codificação e personalização para veículos modernos.</p>
+        </div>
+        <div class="foot-col">
+          <h4>Serviços</h4>
+          <a href="#servicos">Diagnóstico Automotivo</a>
+          <a href="#servicos">Codificação</a>
+          <a href="#servicos">Personalização</a>
+          <a href="#servicos">Scanner Multimarcas</a>
+        </div>
+        <div class="foot-col">
+          <h4>Atendimento</h4>
+          <!-- EDITAR ENDEREÇO/REGIÃO EM CONFIG.address (js/script.js) -->
+          <span class="foot-line">Curitiba • Araucária</span>
+          <span class="foot-line">Região Metropolitana</span>
+        </div>
+        <div class="foot-col">
+          <h4>Contato</h4>
+          <a href="#" data-wa data-testid="footer-whatsapp">WhatsApp</a>
+          <!-- EDITAR INSTAGRAM EM CONFIG.instagram (js/script.js) -->
+          <a href="#" id="footInsta" target="_blank" rel="noopener" data-testid="footer-instagram">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <span>© 2026 Precision Automotive Brasil</span>
+        <span class="foot-tag">Tecnologia • Precisão • Confiança</span>
+      </div>
+    </footer>
+
+    <!-- FLOATING CALL + WHATSAPP -->
+    <a href="#" class="call-float" data-tel data-testid="float-call" aria-label="Ligar agora">
+      <i class="ico ico-phone"></i>
+    </a>
+    <!-- FLOATING WHATSAPP -->
+    <a href="#" class="wa-float" data-wa data-testid="float-whatsapp" aria-label="Falar no WhatsApp">
+      <i class="ico ico-wa"></i>
+      <span class="wa-pulse"></span>
+    </a>
+
+    <!-- Smooth scroll (Lenis via CDN — works on GitHub Pages, no build step) -->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

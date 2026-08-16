@@ -16,11 +16,21 @@ const CONFIG = {
   // 📱 WhatsApp — apenas dígitos. (41) 99754-8811  =>  55 41 99754 8811
   whatsapp: "5541997548811",
 
+  // ☎️ Telefone p/ ligação direta (botão "Ligar"). Formato tel: com DDI.
+  phoneTel: "+5541997548811",
+
   // 📷 Instagram (EDITAR)
   instagram: "https://instagram.com/precisionautobrasil",
 
   // 📍 Região de atendimento (EDITAR)
   address: "Curitiba • Araucária • Região Metropolitana",
+
+  // 🗺️ Cidades atendidas (chips do mapa) — EDITÁVEL
+  regionCities: [
+    "Curitiba","Araucária","São José dos Pinhais","Colombo","Pinhais",
+    "Fazenda Rio Grande","Campo Largo","Piraquara","Almirante Tamandaré",
+    "Quatro Barras","Campina Grande do Sul","Contenda",
+  ],
 
   // 🧾 CNPJ / Nota Fiscal
   cnpj: "68.332.596/0001-60",
@@ -37,7 +47,7 @@ const CONFIG = {
       icon: "scan",
       title: "Diagnóstico Completo",
       desc: "Leitura de falhas, códigos, testes dos sistemas eletrônicos e relatório completo.",
-      price: { old: "199,90", now: "129,90" },
+      price: { old: "199,90", now: "159,90" },
       msg: "Olá! Vim pelo site da Precision Automotive e gostaria de solicitar um Diagnóstico Completo para meu veículo.",
     },
     {
@@ -61,7 +71,7 @@ const CONFIG = {
       icon: "search",
       title: "Avaliação Pré-Compra",
       desc: "Análise completa dos módulos eletrônicos, falhas ocultas e relatórios para compra segura.",
-      price: { old: "249,90", now: "159,90" },
+      price: { old: "249,90", now: "199,90" },
       msg: "Olá! Vim pelo site da Precision Automotive e gostaria de uma Avaliação Pré-Compra com Scanner.",
     },
     {
@@ -84,8 +94,8 @@ const CONFIG = {
 
   /* ---------------- PREÇOS (seção dedicada) — VALORES EDITÁVEIS ---------------- */
   pricing: [
-    { name: "Diagnóstico Completo", old: "199,90", now: "129,90" },
-    { name: "Avaliação Pré-Compra", old: "249,90", now: "159,90" },
+    { name: "Diagnóstico Completo", old: "199,90", now: "159,90" },
+    { name: "Avaliação Pré-Compra", old: "249,90", now: "199,90" },
     { name: "Codificação de Módulos", old: "299,90", now: "199,90" },
     { name: "Regeneração de DPF", old: "349,90", now: "249,90" },
     { name: "Teste de Bateria/Carga", old: "99,90", now: "69,90" },
@@ -229,6 +239,13 @@ function renderTestimonials() {
     </div>`).join("");
 }
 
+function renderRegion() {
+  const el = document.getElementById("regionChips");
+  if (!el) return;
+  el.innerHTML = CONFIG.regionCities.map((c) =>
+    `<span class="region-chip" data-testid="region-chip">${c}</span>`).join("");
+}
+
 /* ============================================================================
    WIRE WHATSAPP LINKS + INSTAGRAM
    ============================================================================ */
@@ -240,6 +257,9 @@ function wireLinks() {
   });
   const insta = document.getElementById("footInsta");
   if (insta) insta.setAttribute("href", CONFIG.instagram);
+  document.querySelectorAll("[data-tel]").forEach((a) => {
+    a.setAttribute("href", "tel:" + CONFIG.phoneTel);
+  });
 }
 
 /* ============================================================================
@@ -347,7 +367,8 @@ function wireSmoothScroll() {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      const top = target.getBoundingClientRect().top + window.scrollY - 70;
+      const offset = (document.getElementById("header")?.offsetHeight || 80) + 14;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
       if (lenis) lenis.scrollTo(top);
       else window.scrollTo({ top, behavior: "smooth" });
     });
@@ -400,6 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderDifferentials();
   renderTimeline();
   renderTestimonials();
+  renderRegion();
   wireLinks();
   wireForm();
   wireHeader();

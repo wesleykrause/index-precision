@@ -176,6 +176,48 @@ const CONFIG = {
       a: "Sim. <strong>Emitimos Nota Fiscal</strong> de todos os serviços realizados — mais segurança e transparência para você. CNPJ 68.332.596/0001-60.",
     },
   ],
+
+  /* ---------------- COMPARAÇÃO (Planos + Scanner + Recursos) — EDITÁVEL ---------------- */
+  comparison: {
+    // Lista canônica de recursos (usada nos planos e na matriz)
+    features: [
+      "Leitura e apagamento de falhas",
+      "Teste de bateria e sistema de carga",
+      "Dados em tempo real",
+      "Testes de atuadores (bidirecional)",
+      "Desbloqueio Protocolo FCA/SGW (Stellantis)",
+      "Codificação / Parametrização",
+      "Personalização de funções",
+      "Relatório técnico",
+      "Nota Fiscal",
+    ],
+    // Planos — preços e recursos (true/false na ordem de "features")
+    plans: [
+      { name: "Essencial", title: "Check-up Eletrônico", price: "69,90",
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Check-up Eletrônico (Essencial).",
+        feats: [true, true, false, false, false, false, false, false, true] },
+      { name: "Completo", title: "Diagnóstico Completo", price: "159,90", popular: true,
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Diagnóstico Completo.",
+        feats: [true, true, true, true, true, false, false, true, true] },
+      { name: "Premium", title: "Completo + Codificação", price: "199,90",
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Completo + Codificação (Premium).",
+        feats: [true, true, true, true, true, true, true, true, true] },
+    ],
+    // Scanner Thinkcar 689BT x Scanner comum. Use "yes", "no" ou um texto livre.
+    scanner: {
+      cols: ["Recurso", "Thinkcar 689BT", "Scanner comum"],
+      rows: [
+        ["Diagnóstico de todos os sistemas", "Completo", "Limitado"],
+        ["Testes de atuadores (bidirecional)", "yes", "no"],
+        ["Codificação e programação", "yes", "no"],
+        ["Desbloqueio FCA/SGW (Stellantis)", "yes", "no"],
+        ["Dados em tempo real", "yes", "Básico"],
+        ["Cobertura multimarcas", "Ampla", "Poucas marcas"],
+        ["Serviços de reset (EPB, óleo, SAS, TPMS)", "yes", "Parcial"],
+        ["Atualizações do fabricante", "yes", "no"],
+      ],
+    },
+  },
 };
 
 /* ============================================================================
@@ -248,7 +290,9 @@ function wireTracking() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("a, button");
     if (!el) return;
-    if (el.closest("[data-testid^='service-quote-']")) {
+    if (el.closest("[data-testid^='plan-quote-']")) {
+      track("plan_quote_click", { plan: labelOf(el).replace("plan-quote-", "") });
+    } else if (el.closest("[data-testid^='service-quote-']")) {
       track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
     } else if (el.closest("[data-wa]")) {
       track("whatsapp_click", { location: labelOf(el) });
@@ -352,6 +396,62 @@ function renderTestimonials() {
         <div><strong>${t.name}</strong><span>${t.role}</span></div>
       </div>
     </div>`).join("");
+}
+
+function renderComparison() {
+  const C = CONFIG.comparison;
+  if (!C) return;
+
+  const pl = document.getElementById("cmpPlans");
+  if (pl) {
+    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => `
+      <div class="plan${p.popular ? " popular" : ""}" data-testid="plan-${pi}">
+        ${p.popular ? '<span class="plan-badge">Mais escolhido</span>' : ""}
+        <span class="plan-name">${p.name}</span>
+        <div class="plan-title">${p.title}</div>
+        <div class="plan-price"><span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
+        <ul class="plan-feats">
+          ${C.features.map((f, fi) => `<li class="${p.feats[fi] ? "" : "no"}"><span class="feat-mark ${p.feats[fi] ? "yes" : "no"}">${p.feats[fi] ? "✓" : "—"}</span>${f}</li>`).join("")}
+        </ul>
+        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${p.popular ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
+      </div>`).join("") + "</div>";
+  }
+
+  const cell = (v) => v === "yes"
+    ? '<span class="cmp-yes">✓</span>'
+    : (v === "no" ? '<span class="cmp-no">—</span>' : `<span class="cmp-note">${v}</span>`);
+
+  const sc = document.getElementById("cmpScanner");
+  if (sc) {
+    sc.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr>' +
+      `<th>${C.scanner.cols[0]}</th><th class="center col-hi">${C.scanner.cols[1]}</th><th class="center">${C.scanner.cols[2]}</th>` +
+      "</tr></thead><tbody>" +
+      C.scanner.rows.map((r) => `<tr><td>${r[0]}</td><td class="center">${cell(r[1])}</td><td class="center">${cell(r[2])}</td></tr>`).join("") +
+      "</tbody></table></div>";
+  }
+
+  const mx = document.getElementById("cmpMatrix");
+  if (mx) {
+    mx.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th>Recurso</th>' +
+      C.plans.map((p) => `<th class="center${p.popular ? " col-hi" : ""}">${p.title}</th>`).join("") +
+      "</tr></thead><tbody>" +
+      C.features.map((f, fi) => `<tr><td>${f}</td>` +
+        C.plans.map((p) => `<td class="center">${p.feats[fi] ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>'}</td>`).join("") +
+        "</tr>").join("") +
+      "</tbody></table></div>";
+  }
+}
+
+function wireCmpTabs() {
+  const tabs = document.querySelectorAll(".cmp-tab");
+  tabs.forEach((t) => t.addEventListener("click", () => {
+    const name = t.getAttribute("data-tab");
+    tabs.forEach((x) => x.classList.remove("active"));
+    t.classList.add("active");
+    document.querySelectorAll(".cmp-panel").forEach((p) =>
+      p.classList.toggle("active", p.getAttribute("data-panel") === name));
+    track("comparison_tab", { tab: name });
+  }));
 }
 
 function renderRegion() {
@@ -558,6 +658,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnalytics();
   renderServices();
   renderPricing();
+  renderComparison();
   renderBrands();
   renderDifferentials();
   renderTimeline();
@@ -572,5 +673,6 @@ document.addEventListener("DOMContentLoaded", () => {
   wireSmoothScroll();
   wirePanel();
   wireTracking();
+  wireCmpTabs();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });

@@ -127,9 +127,9 @@ img{max-width:100%;display:block}
 .brand-text{display:flex;flex-direction:column;line-height:.98}
 .brand-top{font-family:var(--ff-display);font-size:20px;letter-spacing:.06em;color:#fff}
 .brand-bottom{font-family:var(--ff-tech);font-size:11px;letter-spacing:.42em;color:var(--red-2);font-weight:600}
-.nav{display:flex;gap:6px}
-.nav-link{position:relative;padding:8px 14px;font-size:14px;font-weight:500;color:var(--muted);transition:color .3s}
-.nav-link::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav{display:flex;gap:2px}
+.nav-link{position:relative;padding:8px 11px;font-size:14px;font-weight:500;color:var(--muted);transition:color .3s;white-space:nowrap}
+.nav-link::after{content:"";position:absolute;left:11px;right:11px;bottom:2px;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
 .nav-link:hover,.nav-link.active{color:#fff}
 .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
 .header-actions{display:flex;align-items:center;gap:14px}
@@ -460,8 +460,54 @@ img{max-width:100%;display:block}
   background:linear-gradient(170deg,var(--surface),#0b0d11)}
 .faq-cta span{color:var(--text);font-size:15px;font-weight:500}
 
+/* ---------------- COMPARAÇÃO (tabs + plans + tables) ---------------- */
+.cmp-tabs{display:flex;gap:8px;justify-content:center;margin-bottom:44px;flex-wrap:wrap}
+.cmp-tab{font-family:var(--ff-tech);font-size:13px;letter-spacing:.05em;color:var(--muted);
+  background:var(--surface);border:1px solid var(--line-2);border-radius:100px;padding:11px 24px;cursor:pointer;
+  transition:color .3s,background-color .3s,border-color .3s,box-shadow .3s}
+.cmp-tab:hover{color:#fff;border-color:var(--red)}
+.cmp-tab.active{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 8px 24px -8px var(--glow)}
+.cmp-panel{display:none}
+.cmp-panel.active{display:block;animation:cmpfade .5s var(--ease)}
+@keyframes cmpfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.plan{position:relative;background:linear-gradient(170deg,var(--surface),#0b0d11);border:1px solid var(--line);
+  border-radius:var(--radius-lg);padding:34px 28px;display:flex;flex-direction:column;
+  transition:transform .5s var(--ease),border-color .4s,box-shadow .4s}
+.plan:hover{transform:translateY(-8px);border-color:rgba(225,18,28,.45)}
+.plan.popular{border-color:var(--red);box-shadow:0 30px 70px -30px var(--glow)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;
+  font-family:var(--ff-tech);font-size:11px;letter-spacing:.1em;padding:6px 16px;border-radius:100px;white-space:nowrap;box-shadow:0 8px 20px -6px var(--glow)}
+.plan-name{font-family:var(--ff-tech);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red-2)}
+.plan-title{font-size:21px;font-weight:700;margin:6px 0 16px}
+.plan-price{display:flex;align-items:baseline;gap:7px;padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.plan-price .from{font-family:var(--ff-tech);font-size:11px;color:var(--muted-2)}
+.plan-price .val{font-family:var(--ff-display);font-size:34px;color:#fff;line-height:1}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:26px;flex:1}
+.plan-feats li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--text)}
+.plan-feats li.no{color:var(--muted-2)}
+.feat-mark{width:19px;height:19px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;margin-top:1px}
+.feat-mark.yes{background:var(--red-soft);color:var(--red-2)}
+.feat-mark.no{background:rgba(255,255,255,.05);color:var(--muted-2)}
+
+.cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
+.cmp-table{width:100%;border-collapse:collapse;min-width:580px}
+.cmp-table th,.cmp-table td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+.cmp-table thead th{font-family:var(--ff-tech);font-size:12px;letter-spacing:.07em;color:#fff;background:var(--surface-2);text-transform:uppercase}
+.cmp-table thead th.col-hi{color:var(--red-2)}
+.cmp-table tbody tr:last-child td{border-bottom:0}
+.cmp-table tbody tr:hover{background:rgba(255,255,255,.02)}
+.cmp-table .center{text-align:center}
+.cmp-yes{color:var(--red-2);font-weight:700;font-size:16px}
+.cmp-no{color:var(--muted-2);font-size:16px}
+.cmp-note{color:var(--muted);font-size:12.5px}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media(max-width:1024px){
+  .nav{display:none}
+  .hamburger{display:flex}
   .hero-inner{grid-template-columns:1fr;gap:44px}
   .hero-panel{max-width:460px}
   .cards-grid,.diff-grid,.testi-grid{grid-template-columns:repeat(2,1fr)}
@@ -479,7 +525,7 @@ img{max-width:100%;display:block}
   .hamburger{display:flex}
   .section{padding:76px 0}
   .cta-final{padding:84px 0}
-  .cards-grid,.diff-grid,.testi-grid,.pricing-grid,.brands-grid{grid-template-columns:1fr}
+  .cards-grid,.diff-grid,.testi-grid,.pricing-grid,.brands-grid,.plans-grid{grid-template-columns:1fr}
   .brands-grid{grid-template-columns:repeat(2,1fr)}
   .field-row{grid-template-columns:1fr}
   .timeline{grid-template-columns:1fr}
@@ -530,6 +576,7 @@ img{max-width:100%;display:block}
         <nav class="nav" id="nav" data-testid="main-nav">
           <a href="#inicio" class="nav-link">Início</a>
           <a href="#servicos" class="nav-link">Serviços</a>
+          <a href="#comparacao" class="nav-link">Comparar</a>
           <a href="#marcas" class="nav-link">Marcas</a>
           <a href="#diferenciais" class="nav-link">Diferenciais</a>
           <a href="#como-funciona" class="nav-link">Como funciona</a>
@@ -555,6 +602,7 @@ img{max-width:100%;display:block}
     <div class="mobile-menu" id="mobileMenu" data-testid="mobile-menu">
       <a href="#inicio" class="m-link">Início</a>
       <a href="#servicos" class="m-link">Serviços</a>
+      <a href="#comparacao" class="m-link">Comparar</a>
       <a href="#marcas" class="m-link">Marcas</a>
       <a href="#diferenciais" class="m-link">Diferenciais</a>
       <a href="#como-funciona" class="m-link">Como funciona</a>
@@ -685,6 +733,28 @@ img{max-width:100%;display:block}
           <i class="ico ico-info"></i>
           O valor pode variar conforme veículo, sistema e complexidade do serviço.
         </p>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- COMPARAÇÃO (Planos + Scanner + Recursos)                      -->
+    <!-- Dados editáveis em CONFIG.comparison (js/script.js)           -->
+    <!-- ============================================================= -->
+    <section class="section" id="comparacao" data-testid="comparison-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">Comparação</span>
+          <h2 class="section-title">Compare e escolha com segurança</h2>
+          <p class="section-sub">Planos, equipamento e recursos — lado a lado.</p>
+        </header>
+        <div class="cmp-tabs reveal" role="tablist" data-testid="cmp-tabs">
+          <button class="cmp-tab active" data-tab="plans" data-testid="cmp-tab-plans">Planos</button>
+          <button class="cmp-tab" data-tab="scanner" data-testid="cmp-tab-scanner">Scanner 689BT</button>
+          <button class="cmp-tab" data-tab="matrix" data-testid="cmp-tab-matrix">Recursos</button>
+        </div>
+        <div class="cmp-panel active" data-panel="plans" id="cmpPlans" data-testid="cmp-panel-plans"></div>
+        <div class="cmp-panel" data-panel="scanner" id="cmpScanner" data-testid="cmp-panel-scanner"></div>
+        <div class="cmp-panel" data-panel="matrix" id="cmpMatrix" data-testid="cmp-panel-matrix"></div>
       </div>
     </section>
 
@@ -1161,6 +1231,48 @@ const CONFIG = {
       a: "Sim. <strong>Emitimos Nota Fiscal</strong> de todos os serviços realizados — mais segurança e transparência para você. CNPJ 68.332.596/0001-60.",
     },
   ],
+
+  /* ---------------- COMPARAÇÃO (Planos + Scanner + Recursos) — EDITÁVEL ---------------- */
+  comparison: {
+    // Lista canônica de recursos (usada nos planos e na matriz)
+    features: [
+      "Leitura e apagamento de falhas",
+      "Teste de bateria e sistema de carga",
+      "Dados em tempo real",
+      "Testes de atuadores (bidirecional)",
+      "Desbloqueio Protocolo FCA/SGW (Stellantis)",
+      "Codificação / Parametrização",
+      "Personalização de funções",
+      "Relatório técnico",
+      "Nota Fiscal",
+    ],
+    // Planos — preços e recursos (true/false na ordem de "features")
+    plans: [
+      { name: "Essencial", title: "Check-up Eletrônico", price: "69,90",
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Check-up Eletrônico (Essencial).",
+        feats: [true, true, false, false, false, false, false, false, true] },
+      { name: "Completo", title: "Diagnóstico Completo", price: "159,90", popular: true,
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Diagnóstico Completo.",
+        feats: [true, true, true, true, true, false, false, true, true] },
+      { name: "Premium", title: "Completo + Codificação", price: "199,90",
+        msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Completo + Codificação (Premium).",
+        feats: [true, true, true, true, true, true, true, true, true] },
+    ],
+    // Scanner Thinkcar 689BT x Scanner comum. Use "yes", "no" ou um texto livre.
+    scanner: {
+      cols: ["Recurso", "Thinkcar 689BT", "Scanner comum"],
+      rows: [
+        ["Diagnóstico de todos os sistemas", "Completo", "Limitado"],
+        ["Testes de atuadores (bidirecional)", "yes", "no"],
+        ["Codificação e programação", "yes", "no"],
+        ["Desbloqueio FCA/SGW (Stellantis)", "yes", "no"],
+        ["Dados em tempo real", "yes", "Básico"],
+        ["Cobertura multimarcas", "Ampla", "Poucas marcas"],
+        ["Serviços de reset (EPB, óleo, SAS, TPMS)", "yes", "Parcial"],
+        ["Atualizações do fabricante", "yes", "no"],
+      ],
+    },
+  },
 };
 
 /* ============================================================================
@@ -1233,7 +1345,9 @@ function wireTracking() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("a, button");
     if (!el) return;
-    if (el.closest("[data-testid^='service-quote-']")) {
+    if (el.closest("[data-testid^='plan-quote-']")) {
+      track("plan_quote_click", { plan: labelOf(el).replace("plan-quote-", "") });
+    } else if (el.closest("[data-testid^='service-quote-']")) {
       track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
     } else if (el.closest("[data-wa]")) {
       track("whatsapp_click", { location: labelOf(el) });
@@ -1337,6 +1451,62 @@ function renderTestimonials() {
         <div><strong>${t.name}</strong><span>${t.role}</span></div>
       </div>
     </div>`).join("");
+}
+
+function renderComparison() {
+  const C = CONFIG.comparison;
+  if (!C) return;
+
+  const pl = document.getElementById("cmpPlans");
+  if (pl) {
+    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => `
+      <div class="plan${p.popular ? " popular" : ""}" data-testid="plan-${pi}">
+        ${p.popular ? '<span class="plan-badge">Mais escolhido</span>' : ""}
+        <span class="plan-name">${p.name}</span>
+        <div class="plan-title">${p.title}</div>
+        <div class="plan-price"><span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
+        <ul class="plan-feats">
+          ${C.features.map((f, fi) => `<li class="${p.feats[fi] ? "" : "no"}"><span class="feat-mark ${p.feats[fi] ? "yes" : "no"}">${p.feats[fi] ? "✓" : "—"}</span>${f}</li>`).join("")}
+        </ul>
+        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${p.popular ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
+      </div>`).join("") + "</div>";
+  }
+
+  const cell = (v) => v === "yes"
+    ? '<span class="cmp-yes">✓</span>'
+    : (v === "no" ? '<span class="cmp-no">—</span>' : `<span class="cmp-note">${v}</span>`);
+
+  const sc = document.getElementById("cmpScanner");
+  if (sc) {
+    sc.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr>' +
+      `<th>${C.scanner.cols[0]}</th><th class="center col-hi">${C.scanner.cols[1]}</th><th class="center">${C.scanner.cols[2]}</th>` +
+      "</tr></thead><tbody>" +
+      C.scanner.rows.map((r) => `<tr><td>${r[0]}</td><td class="center">${cell(r[1])}</td><td class="center">${cell(r[2])}</td></tr>`).join("") +
+      "</tbody></table></div>";
+  }
+
+  const mx = document.getElementById("cmpMatrix");
+  if (mx) {
+    mx.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th>Recurso</th>' +
+      C.plans.map((p) => `<th class="center${p.popular ? " col-hi" : ""}">${p.title}</th>`).join("") +
+      "</tr></thead><tbody>" +
+      C.features.map((f, fi) => `<tr><td>${f}</td>` +
+        C.plans.map((p) => `<td class="center">${p.feats[fi] ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>'}</td>`).join("") +
+        "</tr>").join("") +
+      "</tbody></table></div>";
+  }
+}
+
+function wireCmpTabs() {
+  const tabs = document.querySelectorAll(".cmp-tab");
+  tabs.forEach((t) => t.addEventListener("click", () => {
+    const name = t.getAttribute("data-tab");
+    tabs.forEach((x) => x.classList.remove("active"));
+    t.classList.add("active");
+    document.querySelectorAll(".cmp-panel").forEach((p) =>
+      p.classList.toggle("active", p.getAttribute("data-panel") === name));
+    track("comparison_tab", { tab: name });
+  }));
 }
 
 function renderRegion() {
@@ -1543,6 +1713,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initAnalytics();
   renderServices();
   renderPricing();
+  renderComparison();
   renderBrands();
   renderDifferentials();
   renderTimeline();
@@ -1557,6 +1728,7 @@ document.addEventListener("DOMContentLoaded", () => {
   wireSmoothScroll();
   wirePanel();
   wireTracking();
+  wireCmpTabs();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });
 

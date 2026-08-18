@@ -451,6 +451,20 @@ img{max-width:100%;display:block}
 .plan-price{display:flex;align-items:baseline;gap:7px;padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .plan-price .from{font-family:var(--ff-tech);font-size:11px;color:var(--muted-2)}
 .plan-price .val{font-family:var(--ff-display);font-size:34px;color:#fff;line-height:1}
+.plan-price{display:flex;align-items:baseline;gap:7px;padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.plan-old{width:100%;font-size:14px;color:var(--muted-2);text-decoration:line-through;margin-bottom:2px}
+.plan-save{display:inline-block;margin:-12px 0 20px;font-family:var(--ff-tech);font-size:11px;letter-spacing:.04em;
+  color:#25d366;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);border-radius:100px;padding:5px 12px}
+.feat-star{color:var(--red-2);font-style:normal;font-size:12px}
+.plan-feats li.hl span{color:#fff;font-weight:600}
+.addon-save{margin-left:6px;font-family:var(--ff-tech);font-size:10px;color:#25d366;font-weight:700}
+.addon-prices{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}
+.addon-prices s{font-size:11px;color:var(--muted-2)}
+.cmp-table tr.hl{background:rgba(225,18,28,.07)}
+.cmp-table tr.hl td:first-child{color:#fff;font-weight:600}
+.hl-badge{display:inline-block;margin-left:8px;font-family:var(--ff-tech);font-size:9.5px;letter-spacing:.06em;
+  color:var(--red-2);border:1px solid rgba(225,18,28,.5);border-radius:100px;padding:1px 8px;vertical-align:middle;white-space:nowrap}
+
 .plan-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:26px;flex:1}
 .plan-feats li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--text)}
 .plan-feats li.no{color:var(--muted-2)}

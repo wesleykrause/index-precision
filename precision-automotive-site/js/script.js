@@ -184,10 +184,14 @@ const CONFIG = {
     popularIndex: 1,
     popularLabel: "Mais escolhido",
 
+    // ⭐ RECURSO EM DESTAQUE (diferencial) — índice na lista "features". Use -1 p/ nenhum.
+    highlightFeatureIndex: 4,
+
     // ➕ ADD-ON OPCIONAL (aparece dentro dos planos cujo recurso "featureIndex" for "opc")
     addon: {
       label: "Regeneração de DPF",
       note: "opcional",
+      oldPrice: "349,90",
       price: "249,90",
       featureIndex: 9,
       msg: "Olá! Vim pelo site da Precision Automotive e quero adicionar a Regeneração de DPF ao meu plano.",
@@ -208,13 +212,13 @@ const CONFIG = {
     ],
     // Planos — recursos na ordem de "features". Use: true, false ou "opc" (add-on opcional).
     plans: [
-      { name: "Essencial", title: "Check-up Eletrônico", price: "69,90",
+      { name: "Essencial", title: "Check-up Eletrônico", price: "69,90", oldPrice: "99,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Check-up Eletrônico (Essencial).",
         feats: [true, true, false, false, false, false, false, false, true, false] },
-      { name: "Completo", title: "Diagnóstico Completo", price: "159,90",
+      { name: "Completo", title: "Diagnóstico Completo", price: "159,90", oldPrice: "199,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Diagnóstico Completo.",
         feats: [true, true, true, true, true, false, false, true, true, "opc"] },
-      { name: "Premium", title: "Completo + Codificação", price: "199,90",
+      { name: "Premium", title: "Completo + Codificação", price: "199,90", oldPrice: "299,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Completo + Codificação (Premium).",
         feats: [true, true, true, true, true, true, true, true, true, "opc"] },
     ],
@@ -419,6 +423,9 @@ function renderComparison() {
   const C = CONFIG.comparison;
   if (!C) return;
   const popIdx = (typeof C.popularIndex === "number") ? C.popularIndex : -1;
+  const hlIdx = (typeof C.highlightFeatureIndex === "number") ? C.highlightFeatureIndex : -1;
+  const parsePrice = (s) => parseFloat(String(s).replace(/\./g, "").replace(",", "."));
+  const fmt = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const pl = document.getElementById("cmpPlans");
   if (pl) {
@@ -434,11 +441,12 @@ function renderComparison() {
         ${pop ? `<span class="plan-badge">${C.popularLabel || "Mais escolhido"}</span>` : ""}
         <span class="plan-name">${p.name}</span>
         <div class="plan-title">${p.title}</div>
-        <div class="plan-price"><span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
+        <div class="plan-price">${p.oldPrice ? `<span class="plan-old">R$ ${p.oldPrice}</span>` : ""}<span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
+        ${p.oldPrice ? `<div class="plan-save">Economize R$ ${fmt(parsePrice(p.oldPrice) - parsePrice(p.price))}</div>` : ""}
         <ul class="plan-feats">
-          ${C.features.map((f, fi) => `<li class="${featClass(p.feats[fi])}">${featMark(p.feats[fi])}<span>${f}${p.feats[fi] === "opc" ? ' <em class="opc-tag">opcional</em>' : ""}</span></li>`).join("")}
+          ${C.features.map((f, fi) => `<li class="${featClass(p.feats[fi])}${fi === hlIdx ? " hl" : ""}">${featMark(p.feats[fi])}<span>${f}${p.feats[fi] === "opc" ? ' <em class="opc-tag">opcional</em>' : ""}${fi === hlIdx ? ' <em class="feat-star" title="Nosso diferencial">★</em>' : ""}</span></li>`).join("")}
         </ul>
-        ${showAddon ? `<a href="${waLink(C.addon.msg)}" target="_blank" rel="noopener" class="plan-addon" data-testid="plan-addon-${pi}"><span class="addon-l"><i class="addon-plus">＋</i> ${C.addon.label} <em>(${C.addon.note})</em></span><span class="addon-price">R$ ${C.addon.price}</span></a>` : ""}
+        ${showAddon ? `<a href="${waLink(C.addon.msg)}" target="_blank" rel="noopener" class="plan-addon" data-testid="plan-addon-${pi}"><span class="addon-l"><i class="addon-plus">＋</i> ${C.addon.label} <em>(${C.addon.note})</em>${C.addon.oldPrice ? `<b class="addon-save">-R$ ${fmt(parsePrice(C.addon.oldPrice) - parsePrice(C.addon.price))}</b>` : ""}</span><span class="addon-prices">${C.addon.oldPrice ? `<s>R$ ${C.addon.oldPrice}</s>` : ""}<span class="addon-price">R$ ${C.addon.price}</span></span></a>` : ""}
         <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${pop ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
       </div>`;
     }).join("") + "</div>";
@@ -465,7 +473,7 @@ function renderComparison() {
     mx.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th>Recurso</th>' +
       C.plans.map((p, pi) => `<th class="center${pi === popIdx ? " col-hi" : ""}">${p.title}</th>`).join("") +
       "</tr></thead><tbody>" +
-      C.features.map((f, fi) => `<tr><td>${f}</td>` +
+      C.features.map((f, fi) => `<tr class="${fi === hlIdx ? "hl" : ""}"><td>${f}${fi === hlIdx ? ' <span class="hl-badge">Diferencial</span>' : ""}</td>` +
         C.plans.map((p) => `<td class="center">${mcell(p.feats[fi])}</td>`).join("") +
         "</tr>").join("") +
       "</tbody></table></div>";

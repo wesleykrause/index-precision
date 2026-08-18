@@ -62,7 +62,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden}
 body{
   font-family:var(--ff-body);
   background:var(--bg);
@@ -431,6 +431,30 @@ img{max-width:100%;display:block}
 /* extra icons */
 .ico-phone{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E")}
 .ico-receipt{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E")}
+.ico-clock{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E")}
+
+/* ---------------- PROMO COUNTDOWN ---------------- */
+.promo-timer{max-width:660px;margin:-18px auto 50px;padding:22px 26px;border:1px solid rgba(225,18,28,.4);
+  border-radius:var(--radius-lg);background:linear-gradient(170deg,var(--surface),#0b0d11);
+  display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 24px 60px -34px var(--glow);position:relative;overflow:hidden}
+.promo-timer::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--red-soft),transparent 60%);pointer-events:none}
+.promo-timer>*{position:relative;z-index:1}
+.promo-label{font-family:var(--ff-tech);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:9px;text-align:center}
+.promo-label .ico{color:var(--red-2);width:16px;height:16px;animation:blink 1.6s infinite}
+.promo-clock{display:flex;align-items:center;gap:10px}
+.promo-unit{display:flex;flex-direction:column;align-items:center;background:#07080a;border:1px solid var(--line-2);border-radius:12px;padding:10px 14px;min-width:66px}
+.promo-unit span{font-family:var(--ff-display);font-size:30px;color:#fff;line-height:1}
+.promo-unit small{font-family:var(--ff-tech);font-size:9px;letter-spacing:.12em;color:var(--muted-2);margin-top:5px;text-transform:uppercase}
+.promo-colon{font-family:var(--ff-display);font-size:24px;color:var(--red-2)}
+.promo-timer.ended{opacity:.75}
+@media(max-width:768px){
+  .promo-timer{margin:0 auto 40px;padding:18px 14px}
+  .promo-clock{gap:5px;width:100%}
+  .promo-unit{min-width:0;flex:1;padding:8px 4px}
+  .promo-unit span{font-size:21px}
+  .promo-unit small{font-size:8px}
+  .promo-colon{font-size:15px}
+}
 
 /* ---------------- SPECIALTY CHIPS (FCA/SGW + Thinkcar) ---------------- */
 .specialty{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 28px}
@@ -753,6 +777,19 @@ img{max-width:100%;display:block}
           <h2 class="section-title">Investimento com transparência</h2>
           <p class="section-sub">Valores de referência. Personalizados conforme o serviço.</p>
         </header>
+
+        <div class="promo-timer reveal" id="promoTimer" data-testid="promo-timer" hidden>
+          <div class="promo-label"><i class="ico ico-clock"></i> <span id="promoLabel">Valores promocionais por tempo limitado</span></div>
+          <div class="promo-clock" aria-live="polite">
+            <div class="promo-unit"><span id="cdDays">00</span><small>dias</small></div>
+            <div class="promo-colon">:</div>
+            <div class="promo-unit"><span id="cdHours">00</span><small>horas</small></div>
+            <div class="promo-colon">:</div>
+            <div class="promo-unit"><span id="cdMin">00</span><small>min</small></div>
+            <div class="promo-colon">:</div>
+            <div class="promo-unit"><span id="cdSec">00</span><small>seg</small></div>
+          </div>
+        </div>
 
         <div class="pricing-grid" id="pricingGrid" data-testid="pricing-grid"></div>
 
@@ -1108,6 +1145,18 @@ const CONFIG = {
   analytics: {
     gaId: "",
     debug: true,
+  },
+
+  /* ⏳ CONTADOR PROMOCIONAL
+     - enabled: liga/desliga o contador
+     - label: texto exibido
+     - endDate: data fixa "2026-12-31T23:59:59" (deixe "" para contagem evolutiva)
+     - rollingHours: quando endDate="", cada visitante recebe uma contagem que reinicia (ex.: 48h) */
+  promo: {
+    enabled: true,
+    label: "Valores promocionais por tempo limitado",
+    endDate: "",
+    rollingHours: 48,
   },
 
   // 📷 Instagram (EDITAR)
@@ -1771,6 +1820,42 @@ function wirePanel() {
   }, 1400);
 }
 
+function wireCountdown() {
+  const P = CONFIG.promo;
+  const el = document.getElementById("promoTimer");
+  if (!P || !P.enabled || !el) return;
+  el.hidden = false;
+  const lbl = document.getElementById("promoLabel");
+  if (lbl && P.label) lbl.textContent = P.label;
+
+  let target;
+  if (P.endDate) {
+    target = new Date(P.endDate).getTime();
+  } else {
+    const key = "pa_promo_end";
+    let stored = parseInt(localStorage.getItem(key) || "0", 10);
+    if (!stored || stored < Date.now()) {
+      stored = Date.now() + (P.rollingHours || 48) * 3600 * 1000;
+      localStorage.setItem(key, String(stored));
+    }
+    target = stored;
+  }
+
+  const pad = (n) => String(n).padStart(2, "0");
+  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = pad(v); };
+  const tick = () => {
+    const diff = Math.max(0, target - Date.now());
+    const s = Math.floor(diff / 1000);
+    set("cdDays", Math.floor(s / 86400));
+    set("cdHours", Math.floor((s % 86400) / 3600));
+    set("cdMin", Math.floor((s % 3600) / 60));
+    set("cdSec", s % 60);
+    if (diff <= 0) el.classList.add("ended");
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+
 /* ============================================================================
    INIT
    ============================================================================ */
@@ -1794,6 +1879,7 @@ document.addEventListener("DOMContentLoaded", () => {
   wirePanel();
   wireTracking();
   wireCmpTabs();
+  wireCountdown();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });
 

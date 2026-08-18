@@ -28,6 +28,18 @@ const CONFIG = {
     debug: true,
   },
 
+  /* ⏳ CONTADOR PROMOCIONAL
+     - enabled: liga/desliga o contador
+     - label: texto exibido
+     - endDate: data fixa "2026-12-31T23:59:59" (deixe "" para contagem evolutiva)
+     - rollingHours: quando endDate="", cada visitante recebe uma contagem que reinicia (ex.: 48h) */
+  promo: {
+    enabled: true,
+    label: "Valores promocionais por tempo limitado",
+    endDate: "",
+    rollingHours: 48,
+  },
+
   // 📷 Instagram (EDITAR)
   instagram: "https://instagram.com/precisionautobrasil",
 
@@ -689,6 +701,42 @@ function wirePanel() {
   }, 1400);
 }
 
+function wireCountdown() {
+  const P = CONFIG.promo;
+  const el = document.getElementById("promoTimer");
+  if (!P || !P.enabled || !el) return;
+  el.hidden = false;
+  const lbl = document.getElementById("promoLabel");
+  if (lbl && P.label) lbl.textContent = P.label;
+
+  let target;
+  if (P.endDate) {
+    target = new Date(P.endDate).getTime();
+  } else {
+    const key = "pa_promo_end";
+    let stored = parseInt(localStorage.getItem(key) || "0", 10);
+    if (!stored || stored < Date.now()) {
+      stored = Date.now() + (P.rollingHours || 48) * 3600 * 1000;
+      localStorage.setItem(key, String(stored));
+    }
+    target = stored;
+  }
+
+  const pad = (n) => String(n).padStart(2, "0");
+  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = pad(v); };
+  const tick = () => {
+    const diff = Math.max(0, target - Date.now());
+    const s = Math.floor(diff / 1000);
+    set("cdDays", Math.floor(s / 86400));
+    set("cdHours", Math.floor((s % 86400) / 3600));
+    set("cdMin", Math.floor((s % 3600) / 60));
+    set("cdSec", s % 60);
+    if (diff <= 0) el.classList.add("ended");
+  };
+  tick();
+  setInterval(tick, 1000);
+}
+
 /* ============================================================================
    INIT
    ============================================================================ */
@@ -712,5 +760,6 @@ document.addEventListener("DOMContentLoaded", () => {
   wirePanel();
   wireTracking();
   wireCmpTabs();
+  wireCountdown();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });

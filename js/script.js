@@ -19,6 +19,15 @@ const CONFIG = {
   // ☎️ Telefone p/ ligação direta (botão "Ligar"). Formato tel: com DDI.
   phoneTel: "+5541997548811",
 
+  /* 📊 TRACKING / ANALYTICS
+     - gaId: cole aqui o ID do Google Analytics 4 (ex.: "G-XXXXXXXXXX") ou do Google Ads.
+             Deixe vazio ("") para usar só o rastreio local (console + localStorage + dataLayer).
+     - debug: mostra cada evento no console do navegador. */
+  analytics: {
+    gaId: "",
+    debug: true,
+  },
+
   // 📷 Instagram (EDITAR)
   instagram: "https://instagram.com/precisionautobrasil",
 
@@ -126,11 +135,46 @@ const CONFIG = {
     { n:"04", title:"Resultado", desc:"Apresentamos o diagnóstico e orientamos os próximos passos." },
   ],
 
-  /* ---------------- DEPOIMENTOS (SUBSTITUA PELOS REAIS) ---------------- */
-  testimonials: [
+  /* ---------------- DEPOIMENTOS (SUBSTITUA PELOS REAIS) ---------------- */  testimonials: [
     { stars:5, text:"Excelente atendimento e diagnóstico muito preciso. Descobriram a falha que ninguém achava.", name:"Cliente Precision", role:"Curitiba/PR" },
     { stars:5, text:"Profissionais e transparentes. Explicaram tudo com clareza antes de qualquer serviço.", name:"Cliente Precision", role:"Araucária/PR" },
     { stars:5, text:"Codificação feita com segurança e nota fiscal. Recomendo para veículos modernos.", name:"Cliente Precision", role:"Região Metropolitana" },
+  ],
+
+  /* ---------------- FAQ (Thinkcar 689BT + Protocolo FCA/SGW) — EDITÁVEL ---------------- */
+  faq: [
+    {
+      q: "O que é o Protocolo FCA/SGW (Security Gateway) da Stellantis?",
+      a: "É o <strong>módulo de segurança (Security Gateway)</strong> presente nos veículos da linha Stellantis (Jeep, Fiat, RAM, Dodge, Chrysler e modelos recentes de Peugeot/Citroën) a partir de aproximadamente 2018. Ele bloqueia o acesso dos scanners às <strong>funções bidirecionais</strong> — como testes de atuadores, codificações e gravações. Para realizar um diagnóstico completo é necessário liberar o gateway de forma autorizada.",
+    },
+    {
+      q: "Vocês executam o desbloqueio / liberação do FCA/SGW?",
+      a: "Sim. Nós <strong>executamos o procedimento de acesso ao Security Gateway</strong> da linha Stellantis, permitindo leitura completa de falhas, testes de atuadores, resets e codificações nesses veículos.",
+    },
+    {
+      q: "O que é o scanner Thinkcar 689BT?",
+      a: "É um <strong>scanner automotivo profissional multimarcas</strong> (linha ThinkScan/ThinkTool 689BT) com conexão Bluetooth. Faz diagnóstico de todos os sistemas do veículo, leitura e apagamento de falhas, dados em tempo real, testes ativos (atuadores), codificação/programação de módulos e diversos serviços de reset.",
+    },
+    {
+      q: "O Thinkcar 689BT acessa o Security Gateway da Stellantis?",
+      a: "Sim. O equipamento <strong>suporta o procedimento de gateway FCA/SGW</strong>, liberando o diagnóstico completo e as funções bidirecionais nos veículos Stellantis compatíveis.",
+    },
+    {
+      q: "Quais funções o 689BT consegue executar?",
+      a: "Diagnóstico completo de todos os módulos, leitura/limpeza de códigos de falha, <strong>dados em tempo real</strong>, testes de atuadores, codificação e programação de módulos, além de resets como óleo, freio de estacionamento eletrônico (EPB), TPMS, ângulo de direção (SAS), entre outros — conforme a compatibilidade do veículo.",
+    },
+    {
+      q: "Quais marcas possuem o Security Gateway?",
+      a: "Principalmente as marcas do grupo <strong>Stellantis</strong>: Jeep, Fiat, RAM, Dodge e Chrysler, além de modelos mais recentes de Peugeot e Citroën. A presença do SGW varia conforme o modelo e o ano do veículo.",
+    },
+    {
+      q: "O diagnóstico funciona em qualquer carro?",
+      a: "Atendemos <strong>diversas marcas nacionais e importadas</strong>. A disponibilidade de cada função (codificação, testes, resets) depende do modelo, ano e da compatibilidade do scanner com o veículo. Em caso de dúvida, consulte-nos pelo WhatsApp informando marca, modelo e ano.",
+    },
+    {
+      q: "Emitem Nota Fiscal do serviço?",
+      a: "Sim. <strong>Emitimos Nota Fiscal</strong> de todos os serviços realizados — mais segurança e transparência para você. CNPJ 68.332.596/0001-60.",
+    },
   ],
 };
 
@@ -157,6 +201,77 @@ const ICONS = {
 function waLink(message) {
   const msg = encodeURIComponent(message || CONFIG.defaultMessage);
   return `https://wa.me/${CONFIG.whatsapp}?text=${msg}`;
+}
+
+/* ============================================================================
+   TRACKING DE CLIQUES / ANALYTICS
+   Compatível com Google Analytics 4 (gtag) e Google Tag Manager (dataLayer).
+   Sempre grava um contador local (localStorage: "pa_track") e loga no console.
+   ============================================================================ */
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
+
+function initAnalytics() {
+  const id = CONFIG.analytics && CONFIG.analytics.gaId;
+  if (!id) return;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
+  document.head.appendChild(s);
+  gtag("js", new Date());
+  gtag("config", id, { anonymize_ip: true });
+}
+
+function track(event, params) {
+  const p = params || {};
+  window.dataLayer.push(Object.assign({ event }, p));
+  if (CONFIG.analytics && CONFIG.analytics.gaId) gtag("event", event, p);
+  try {
+    const store = JSON.parse(localStorage.getItem("pa_track") || "{}");
+    store[event] = (store[event] || 0) + 1;
+    localStorage.setItem("pa_track", JSON.stringify(store));
+  } catch (e) {}
+  if (CONFIG.analytics && CONFIG.analytics.debug) console.log("[track]", event, p);
+}
+
+// Utilitário: expõe o resumo de cliques no console -> digite paTracking() no navegador
+window.paTracking = function () {
+  try { return JSON.parse(localStorage.getItem("pa_track") || "{}"); } catch (e) { return {}; }
+};
+
+function labelOf(el) {
+  const t = el.closest("[data-testid]");
+  return t ? t.getAttribute("data-testid") : (el.id || "unknown");
+}
+
+function wireTracking() {
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("a, button");
+    if (!el) return;
+    if (el.closest("[data-testid^='service-quote-']")) {
+      track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
+    } else if (el.closest("[data-wa]")) {
+      track("whatsapp_click", { location: labelOf(el) });
+    } else if (el.closest("[data-tel]")) {
+      track("phone_click", { location: labelOf(el) });
+    } else if (el.matches(".faq-q")) {
+      track("faq_open", { question: (el.textContent || "").trim().slice(0, 60) });
+    } else if (el.matches(".nav-link, .m-link")) {
+      track("nav_click", { target: el.getAttribute("href") });
+    } else if (el.matches("[data-testid='hero-secondary-btn']")) {
+      track("cta_click", { location: "hero-conhecer-servicos" });
+    }
+  }, true);
+
+  // visualização de seções
+  const secObs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { track("section_view", { section: en.target.id }); secObs.unobserve(en.target); }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll("section[id]").forEach((s) => secObs.observe(s));
+
+  track("page_view", { path: location.pathname + location.hash });
 }
 
 /* ============================================================================
@@ -246,6 +361,30 @@ function renderRegion() {
     `<span class="region-chip" data-testid="region-chip">${c}</span>`).join("");
 }
 
+function renderFaq() {
+  const el = document.getElementById("faqList");
+  if (!el) return;
+  el.classList.add("stagger");
+  el.innerHTML = CONFIG.faq.map((f, i) => `
+    <div class="faq-item" data-testid="faq-item">
+      <button class="faq-q" aria-expanded="false" data-testid="faq-toggle-${i}">
+        <span>${f.q}</span><i class="faq-ico"></i>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+    </div>`).join("");
+  el.querySelectorAll(".faq-q").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faq-item");
+      const isOpen = item.classList.contains("open");
+      el.querySelectorAll(".faq-item.open").forEach((o) => {
+        o.classList.remove("open");
+        o.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+      });
+      if (!isOpen) { item.classList.add("open"); btn.setAttribute("aria-expanded", "true"); }
+    });
+  });
+}
+
 /* ============================================================================
    WIRE WHATSAPP LINKS + INSTAGRAM
    ============================================================================ */
@@ -290,6 +429,7 @@ Ano: ${f.get("ano") || "-"}
 Serviço: ${f.get("servico") || "-"}
 Problema: ${f.get("descricao") || "-"}`;
 
+    track("quote_form_submit", { service: f.get("servico") || "-" });
     window.open(waLink(msg), "_blank", "noopener");
   });
 }
@@ -415,6 +555,7 @@ function wirePanel() {
    INIT
    ============================================================================ */
 document.addEventListener("DOMContentLoaded", () => {
+  initAnalytics();
   renderServices();
   renderPricing();
   renderBrands();
@@ -422,6 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   renderTestimonials();
   renderRegion();
+  renderFaq();
   wireLinks();
   wireForm();
   wireHeader();
@@ -429,5 +571,6 @@ document.addEventListener("DOMContentLoaded", () => {
   wireReveal();
   wireSmoothScroll();
   wirePanel();
+  wireTracking();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });

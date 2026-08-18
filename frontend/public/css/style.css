@@ -399,6 +399,34 @@ img{max-width:100%;display:block}
 .ico-phone{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E")}
 .ico-receipt{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E")}
 
+/* ---------------- SPECIALTY CHIPS (FCA/SGW + Thinkcar) ---------------- */
+.specialty{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 28px}
+.spec-chip{display:inline-flex;align-items:center;gap:10px;font-family:var(--ff-tech);font-size:12.5px;
+  letter-spacing:.04em;color:#fff;background:var(--red-soft);border:1px solid rgba(225,18,28,.45);
+  border-radius:100px;padding:10px 16px}
+.spec-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red-2);box-shadow:0 0 10px var(--red-2)}
+
+/* ---------------- FAQ ---------------- */
+.faq-list{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .3s,background-color .3s}
+.faq-item.open{border-color:rgba(225,18,28,.5);background:var(--surface-2)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;
+  background:none;border:0;cursor:pointer;color:#fff;font-family:var(--ff-body);font-size:16px;font-weight:600;text-align:left;transition:color .3s}
+.faq-q:hover{color:var(--red-2)}
+.faq-ico{position:relative;width:18px;height:18px;flex:none}
+.faq-ico::before,.faq-ico::after{content:"";position:absolute;background:var(--red-2);border-radius:2px;transition:transform .35s var(--ease)}
+.faq-ico::before{top:8px;left:0;width:18px;height:2px}
+.faq-ico::after{left:8px;top:0;width:2px;height:18px}
+.faq-item.open .faq-ico::after{transform:scaleY(0)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.faq-item.open .faq-a{max-height:480px}
+.faq-a-inner{padding:0 24px 22px;color:var(--muted);font-size:15px;line-height:1.72}
+.faq-a-inner strong{color:var(--text)}
+.faq-cta{max-width:840px;margin:36px auto 0;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;padding:24px 28px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(170deg,var(--surface),#0b0d11)}
+.faq-cta span{color:var(--text);font-size:15px;font-weight:500}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:44px}

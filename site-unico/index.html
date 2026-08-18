@@ -432,6 +432,34 @@ img{max-width:100%;display:block}
 .ico-phone{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1z'/%3E%3C/svg%3E")}
 .ico-receipt{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M6 3h9l3 3v14l-2.2-1.3L13.6 20 12 18.7 10.4 20 8.2 18.7 6 20V3z'/%3E%3Cpath d='M9 8h6M9 12h6M9 15h4'/%3E%3C/svg%3E")}
 
+/* ---------------- SPECIALTY CHIPS (FCA/SGW + Thinkcar) ---------------- */
+.specialty{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 28px}
+.spec-chip{display:inline-flex;align-items:center;gap:10px;font-family:var(--ff-tech);font-size:12.5px;
+  letter-spacing:.04em;color:#fff;background:var(--red-soft);border:1px solid rgba(225,18,28,.45);
+  border-radius:100px;padding:10px 16px}
+.spec-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red-2);box-shadow:0 0 10px var(--red-2)}
+
+/* ---------------- FAQ ---------------- */
+.faq-list{max-width:840px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.faq-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .3s,background-color .3s}
+.faq-item.open{border-color:rgba(225,18,28,.5);background:var(--surface-2)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 24px;
+  background:none;border:0;cursor:pointer;color:#fff;font-family:var(--ff-body);font-size:16px;font-weight:600;text-align:left;transition:color .3s}
+.faq-q:hover{color:var(--red-2)}
+.faq-ico{position:relative;width:18px;height:18px;flex:none}
+.faq-ico::before,.faq-ico::after{content:"";position:absolute;background:var(--red-2);border-radius:2px;transition:transform .35s var(--ease)}
+.faq-ico::before{top:8px;left:0;width:18px;height:2px}
+.faq-ico::after{left:8px;top:0;width:2px;height:18px}
+.faq-item.open .faq-ico::after{transform:scaleY(0)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.faq-item.open .faq-a{max-height:480px}
+.faq-a-inner{padding:0 24px 22px;color:var(--muted);font-size:15px;line-height:1.72}
+.faq-a-inner strong{color:var(--text)}
+.faq-cta{max-width:840px;margin:36px auto 0;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  flex-wrap:wrap;padding:24px 28px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(170deg,var(--surface),#0b0d11)}
+.faq-cta span{color:var(--text);font-size:15px;font-weight:500}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:44px}
@@ -505,6 +533,7 @@ img{max-width:100%;display:block}
           <a href="#marcas" class="nav-link">Marcas</a>
           <a href="#diferenciais" class="nav-link">Diferenciais</a>
           <a href="#como-funciona" class="nav-link">Como funciona</a>
+          <a href="#faq" class="nav-link">FAQ</a>
           <a href="#contato" class="nav-link">Contato</a>
         </nav>
 
@@ -529,6 +558,7 @@ img{max-width:100%;display:block}
       <a href="#marcas" class="m-link">Marcas</a>
       <a href="#diferenciais" class="m-link">Diferenciais</a>
       <a href="#como-funciona" class="m-link">Como funciona</a>
+      <a href="#faq" class="m-link">FAQ</a>
       <a href="#contato" class="m-link">Contato</a>
       <a href="#" class="btn btn-wa btn-block" data-wa data-testid="mobile-whatsapp-btn">
         <i class="ico ico-wa"></i><span>Falar no WhatsApp</span>
@@ -580,7 +610,7 @@ img{max-width:100%;display:block}
           <div class="panel">
             <div class="panel-head">
               <div class="panel-title"><span class="live"></span> DIAGNÓSTICO EM TEMPO REAL</div>
-              <div class="panel-id">PA-SCAN v3</div>
+              <div class="panel-id">THINKCAR 689BT</div>
             </div>
 
             <div class="panel-modules">
@@ -699,6 +729,10 @@ img{max-width:100%;display:block}
             Mapeamos a comunicação entre os módulos, lemos os parâmetros em tempo
             real e identificamos exatamente onde está a falha — sem achismo.
           </p>
+          <div class="specialty reveal" data-testid="specialty">
+            <span class="spec-chip">Protocolo FCA/SGW — Linha Stellantis</span>
+            <span class="spec-chip">Scanner Thinkcar 689BT</span>
+          </div>
           <a href="#contato" class="btn btn-primary" data-testid="tech-cta">Fazer meu diagnóstico</a>
         </div>
 
@@ -866,6 +900,27 @@ img{max-width:100%;display:block}
     </section>
 
     <!-- ============================================================= -->
+    <!-- FAQ — Thinkcar 689BT + Protocolo FCA/SGW                      -->
+    <!-- ============================================================= -->
+    <section class="section faq-section" id="faq" data-testid="faq-section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="kicker">09 — Dúvidas</span>
+          <h2 class="section-title">Perguntas frequentes</h2>
+          <p class="section-sub">Thinkcar 689BT e Protocolo FCA/SGW (Linha Stellantis).</p>
+        </header>
+        <!-- PERGUNTAS EDITÁVEIS EM CONFIG.faq (js/script.js) -->
+        <div class="faq-list" id="faqList" data-testid="faq-list"></div>
+        <div class="faq-cta reveal">
+          <span>Ficou com alguma dúvida sobre o seu veículo?</span>
+          <a href="#" class="btn btn-primary" data-wa
+             data-wa-msg="Olá! Vim pelo site da Precision Automotive e tenho uma dúvida sobre o diagnóstico / Protocolo FCA-SGW (Stellantis) do meu veículo."
+             data-testid="faq-wa-btn">Falar com um especialista <i class="ico ico-wa"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
     <!-- CTA FINAL                                                     -->
     <!-- ============================================================= -->
     <section class="cta-final" data-testid="cta-final">
@@ -894,6 +949,7 @@ img{max-width:100%;display:block}
           <a href="#servicos">Codificação</a>
           <a href="#servicos">Personalização</a>
           <a href="#servicos">Scanner Multimarcas</a>
+          <a href="#faq">Desbloqueio FCA/SGW (Stellantis)</a>
         </div>
         <div class="foot-col">
           <h4>Atendimento</h4>
@@ -947,6 +1003,15 @@ const CONFIG = {
 
   // ☎️ Telefone p/ ligação direta (botão "Ligar"). Formato tel: com DDI.
   phoneTel: "+5541997548811",
+
+  /* 📊 TRACKING / ANALYTICS
+     - gaId: cole aqui o ID do Google Analytics 4 (ex.: "G-XXXXXXXXXX") ou do Google Ads.
+             Deixe vazio ("") para usar só o rastreio local (console + localStorage + dataLayer).
+     - debug: mostra cada evento no console do navegador. */
+  analytics: {
+    gaId: "",
+    debug: true,
+  },
 
   // 📷 Instagram (EDITAR)
   instagram: "https://instagram.com/precisionautobrasil",
@@ -1055,11 +1120,46 @@ const CONFIG = {
     { n:"04", title:"Resultado", desc:"Apresentamos o diagnóstico e orientamos os próximos passos." },
   ],
 
-  /* ---------------- DEPOIMENTOS (SUBSTITUA PELOS REAIS) ---------------- */
-  testimonials: [
+  /* ---------------- DEPOIMENTOS (SUBSTITUA PELOS REAIS) ---------------- */  testimonials: [
     { stars:5, text:"Excelente atendimento e diagnóstico muito preciso. Descobriram a falha que ninguém achava.", name:"Cliente Precision", role:"Curitiba/PR" },
     { stars:5, text:"Profissionais e transparentes. Explicaram tudo com clareza antes de qualquer serviço.", name:"Cliente Precision", role:"Araucária/PR" },
     { stars:5, text:"Codificação feita com segurança e nota fiscal. Recomendo para veículos modernos.", name:"Cliente Precision", role:"Região Metropolitana" },
+  ],
+
+  /* ---------------- FAQ (Thinkcar 689BT + Protocolo FCA/SGW) — EDITÁVEL ---------------- */
+  faq: [
+    {
+      q: "O que é o Protocolo FCA/SGW (Security Gateway) da Stellantis?",
+      a: "É o <strong>módulo de segurança (Security Gateway)</strong> presente nos veículos da linha Stellantis (Jeep, Fiat, RAM, Dodge, Chrysler e modelos recentes de Peugeot/Citroën) a partir de aproximadamente 2018. Ele bloqueia o acesso dos scanners às <strong>funções bidirecionais</strong> — como testes de atuadores, codificações e gravações. Para realizar um diagnóstico completo é necessário liberar o gateway de forma autorizada.",
+    },
+    {
+      q: "Vocês executam o desbloqueio / liberação do FCA/SGW?",
+      a: "Sim. Nós <strong>executamos o procedimento de acesso ao Security Gateway</strong> da linha Stellantis, permitindo leitura completa de falhas, testes de atuadores, resets e codificações nesses veículos.",
+    },
+    {
+      q: "O que é o scanner Thinkcar 689BT?",
+      a: "É um <strong>scanner automotivo profissional multimarcas</strong> (linha ThinkScan/ThinkTool 689BT) com conexão Bluetooth. Faz diagnóstico de todos os sistemas do veículo, leitura e apagamento de falhas, dados em tempo real, testes ativos (atuadores), codificação/programação de módulos e diversos serviços de reset.",
+    },
+    {
+      q: "O Thinkcar 689BT acessa o Security Gateway da Stellantis?",
+      a: "Sim. O equipamento <strong>suporta o procedimento de gateway FCA/SGW</strong>, liberando o diagnóstico completo e as funções bidirecionais nos veículos Stellantis compatíveis.",
+    },
+    {
+      q: "Quais funções o 689BT consegue executar?",
+      a: "Diagnóstico completo de todos os módulos, leitura/limpeza de códigos de falha, <strong>dados em tempo real</strong>, testes de atuadores, codificação e programação de módulos, além de resets como óleo, freio de estacionamento eletrônico (EPB), TPMS, ângulo de direção (SAS), entre outros — conforme a compatibilidade do veículo.",
+    },
+    {
+      q: "Quais marcas possuem o Security Gateway?",
+      a: "Principalmente as marcas do grupo <strong>Stellantis</strong>: Jeep, Fiat, RAM, Dodge e Chrysler, além de modelos mais recentes de Peugeot e Citroën. A presença do SGW varia conforme o modelo e o ano do veículo.",
+    },
+    {
+      q: "O diagnóstico funciona em qualquer carro?",
+      a: "Atendemos <strong>diversas marcas nacionais e importadas</strong>. A disponibilidade de cada função (codificação, testes, resets) depende do modelo, ano e da compatibilidade do scanner com o veículo. Em caso de dúvida, consulte-nos pelo WhatsApp informando marca, modelo e ano.",
+    },
+    {
+      q: "Emitem Nota Fiscal do serviço?",
+      a: "Sim. <strong>Emitimos Nota Fiscal</strong> de todos os serviços realizados — mais segurança e transparência para você. CNPJ 68.332.596/0001-60.",
+    },
   ],
 };
 
@@ -1086,6 +1186,77 @@ const ICONS = {
 function waLink(message) {
   const msg = encodeURIComponent(message || CONFIG.defaultMessage);
   return `https://wa.me/${CONFIG.whatsapp}?text=${msg}`;
+}
+
+/* ============================================================================
+   TRACKING DE CLIQUES / ANALYTICS
+   Compatível com Google Analytics 4 (gtag) e Google Tag Manager (dataLayer).
+   Sempre grava um contador local (localStorage: "pa_track") e loga no console.
+   ============================================================================ */
+window.dataLayer = window.dataLayer || [];
+function gtag() { window.dataLayer.push(arguments); }
+
+function initAnalytics() {
+  const id = CONFIG.analytics && CONFIG.analytics.gaId;
+  if (!id) return;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + id;
+  document.head.appendChild(s);
+  gtag("js", new Date());
+  gtag("config", id, { anonymize_ip: true });
+}
+
+function track(event, params) {
+  const p = params || {};
+  window.dataLayer.push(Object.assign({ event }, p));
+  if (CONFIG.analytics && CONFIG.analytics.gaId) gtag("event", event, p);
+  try {
+    const store = JSON.parse(localStorage.getItem("pa_track") || "{}");
+    store[event] = (store[event] || 0) + 1;
+    localStorage.setItem("pa_track", JSON.stringify(store));
+  } catch (e) {}
+  if (CONFIG.analytics && CONFIG.analytics.debug) console.log("[track]", event, p);
+}
+
+// Utilitário: expõe o resumo de cliques no console -> digite paTracking() no navegador
+window.paTracking = function () {
+  try { return JSON.parse(localStorage.getItem("pa_track") || "{}"); } catch (e) { return {}; }
+};
+
+function labelOf(el) {
+  const t = el.closest("[data-testid]");
+  return t ? t.getAttribute("data-testid") : (el.id || "unknown");
+}
+
+function wireTracking() {
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("a, button");
+    if (!el) return;
+    if (el.closest("[data-testid^='service-quote-']")) {
+      track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
+    } else if (el.closest("[data-wa]")) {
+      track("whatsapp_click", { location: labelOf(el) });
+    } else if (el.closest("[data-tel]")) {
+      track("phone_click", { location: labelOf(el) });
+    } else if (el.matches(".faq-q")) {
+      track("faq_open", { question: (el.textContent || "").trim().slice(0, 60) });
+    } else if (el.matches(".nav-link, .m-link")) {
+      track("nav_click", { target: el.getAttribute("href") });
+    } else if (el.matches("[data-testid='hero-secondary-btn']")) {
+      track("cta_click", { location: "hero-conhecer-servicos" });
+    }
+  }, true);
+
+  // visualização de seções
+  const secObs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) { track("section_view", { section: en.target.id }); secObs.unobserve(en.target); }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll("section[id]").forEach((s) => secObs.observe(s));
+
+  track("page_view", { path: location.pathname + location.hash });
 }
 
 /* ============================================================================
@@ -1175,6 +1346,30 @@ function renderRegion() {
     `<span class="region-chip" data-testid="region-chip">${c}</span>`).join("");
 }
 
+function renderFaq() {
+  const el = document.getElementById("faqList");
+  if (!el) return;
+  el.classList.add("stagger");
+  el.innerHTML = CONFIG.faq.map((f, i) => `
+    <div class="faq-item" data-testid="faq-item">
+      <button class="faq-q" aria-expanded="false" data-testid="faq-toggle-${i}">
+        <span>${f.q}</span><i class="faq-ico"></i>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+    </div>`).join("");
+  el.querySelectorAll(".faq-q").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faq-item");
+      const isOpen = item.classList.contains("open");
+      el.querySelectorAll(".faq-item.open").forEach((o) => {
+        o.classList.remove("open");
+        o.querySelector(".faq-q").setAttribute("aria-expanded", "false");
+      });
+      if (!isOpen) { item.classList.add("open"); btn.setAttribute("aria-expanded", "true"); }
+    });
+  });
+}
+
 /* ============================================================================
    WIRE WHATSAPP LINKS + INSTAGRAM
    ============================================================================ */
@@ -1219,6 +1414,7 @@ Ano: ${f.get("ano") || "-"}
 Serviço: ${f.get("servico") || "-"}
 Problema: ${f.get("descricao") || "-"}`;
 
+    track("quote_form_submit", { service: f.get("servico") || "-" });
     window.open(waLink(msg), "_blank", "noopener");
   });
 }
@@ -1344,6 +1540,7 @@ function wirePanel() {
    INIT
    ============================================================================ */
 document.addEventListener("DOMContentLoaded", () => {
+  initAnalytics();
   renderServices();
   renderPricing();
   renderBrands();
@@ -1351,6 +1548,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTimeline();
   renderTestimonials();
   renderRegion();
+  renderFaq();
   wireLinks();
   wireForm();
   wireHeader();
@@ -1358,6 +1556,7 @@ document.addEventListener("DOMContentLoaded", () => {
   wireReveal();
   wireSmoothScroll();
   wirePanel();
+  wireTracking();
   requestAnimationFrame(() => document.body.classList.add("loaded"));
 });
 

@@ -43,18 +43,24 @@ const CONFIG = {
   // 📷 Instagram (EDITAR)
   instagram: "https://instagram.com/precisionautobrasil",
 
+  // ⭐ Google Reviews (EDITAR o link)
+  googleReviews: {
+    url: "https://share.google/DKKqy3Slck4MK9JpK",
+    label: "Avaliações no Google",
+  },
+
   // 📍 Região de atendimento (EDITAR)
   address: "Curitiba • Araucária • Região Metropolitana",
 
   // 🕒 Horário de atendimento (0=Dom ... 6=Sáb). Use "closed" ou {open,close} em HH:MM.
   hours: {
-    0: "closed",
-    1: { open: "08:00", close: "18:00" },
-    2: { open: "08:00", close: "18:00" },
-    3: { open: "08:00", close: "18:00" },
-    4: { open: "08:00", close: "18:00" },
-    5: { open: "08:00", close: "18:00" },
-    6: { open: "08:00", close: "12:00" },
+    0: "Sob agendamento",
+    1: { open: "07:30", close: "18:30" },
+    2: { open: "07:30", close: "18:30" },
+    3: { open: "07:30", close: "18:30" },
+    4: { open: "07:30", close: "18:30" },
+    5: { open: "07:30", close: "18:30" },
+    6: { open: "08:00", close: "20:00" },
   },
 
   // 🗺️ Destino do botão "Traçar rota" (endereço completo ou "lat,lng"). EDITAR com o endereço exato.
@@ -347,6 +353,8 @@ function wireTracking() {
       track("phone_click", { location: labelOf(el) });
     } else if (el.matches("#routeBtn")) {
       track("route_click", {});
+    } else if (el.closest("#googleReviews") || el.matches("#footGoogle")) {
+      track("google_reviews_click", {});
     } else if (el.matches(".faq-q")) {
       track("faq_open", { question: (el.textContent || "").trim().slice(0, 60) });
     } else if (el.matches(".nav-link, .m-link")) {
@@ -540,7 +548,7 @@ function statusNow() {
   const cur = now.getHours() * 60 + now.getMinutes();
   const toMin = (s) => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
   const today = H[now.getDay()];
-  const open = !!(today && today !== "closed" && cur >= toMin(today.open) && cur < toMin(today.close));
+  const open = !!(today && typeof today === "object" && cur >= toMin(today.open) && cur < toMin(today.close));
   return { open };
 }
 
@@ -553,7 +561,7 @@ function renderHours() {
   if (list) {
     list.innerHTML = [1, 2, 3, 4, 5, 6, 0].map((d) => {
       const v = H[d];
-      const txt = (v && v !== "closed") ? `${v.open} – ${v.close}` : "Fechado";
+      const txt = (v && typeof v === "object") ? `${v.open} – ${v.close}` : (v && v !== "closed" ? v : "Fechado");
       return `<div class="hrow${d === dToday ? " today" : ""}"><span>${names[d]}</span><span>${txt}</span></div>`;
     }).join("");
   }
@@ -600,6 +608,12 @@ function wireLinks() {
   });
   const insta = document.getElementById("footInsta");
   if (insta) insta.setAttribute("href", CONFIG.instagram);
+  if (CONFIG.googleReviews) {
+    const gr = document.getElementById("googleReviews");
+    if (gr) gr.setAttribute("href", CONFIG.googleReviews.url);
+    const fg = document.getElementById("footGoogle");
+    if (fg) fg.setAttribute("href", CONFIG.googleReviews.url);
+  }
   document.querySelectorAll("[data-tel]").forEach((a) => {
     a.setAttribute("href", "tel:" + CONFIG.phoneTel);
   });

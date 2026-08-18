@@ -417,6 +417,18 @@ img{max-width:100%;display:block}
 .hrow span:last-child{font-family:var(--ff-tech)}
 .region-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto}
 .region-actions .btn{flex:1;min-width:150px}
+.hours-note{font-size:12.5px;color:var(--muted-2);margin:-14px 0 22px}
+
+/* Google Reviews badge */
+.gbadge{display:inline-flex;align-items:center;gap:14px;margin-top:24px;padding:12px 18px;border:1px solid var(--line-2);
+  border-radius:100px;background:var(--surface);transition:border-color .3s,transform .3s var(--ease),box-shadow .3s;text-align:left}
+.gbadge:hover{border-color:var(--red);transform:translateY(-2px);box-shadow:0 12px 30px -14px var(--glow)}
+.gbadge-g{width:24px;height:24px;flex:none;display:flex}
+.gbadge-g svg{width:100%;height:100%}
+.gbadge-txt{display:flex;flex-direction:column;line-height:1.15}
+.gbadge-txt strong{font-size:14px;color:#fff;font-weight:600}
+.gstars{color:#fbbc05;font-size:13px;letter-spacing:2px}
+.gbadge-cta{font-family:var(--ff-tech);font-size:11px;letter-spacing:.06em;color:var(--red-2);border-left:1px solid var(--line);padding-left:14px;white-space:nowrap}
 
 /* ---------------- PROMO COUNTDOWN ---------------- */
 .promo-timer{max-width:660px;margin:-18px auto 50px;padding:22px 26px;border:1px solid rgba(225,18,28,.4);

@@ -46,6 +46,20 @@ const CONFIG = {
   // 📍 Região de atendimento (EDITAR)
   address: "Curitiba • Araucária • Região Metropolitana",
 
+  // 🕒 Horário de atendimento (0=Dom ... 6=Sáb). Use "closed" ou {open,close} em HH:MM.
+  hours: {
+    0: "closed",
+    1: { open: "08:00", close: "18:00" },
+    2: { open: "08:00", close: "18:00" },
+    3: { open: "08:00", close: "18:00" },
+    4: { open: "08:00", close: "18:00" },
+    5: { open: "08:00", close: "18:00" },
+    6: { open: "08:00", close: "12:00" },
+  },
+
+  // 🗺️ Destino do botão "Traçar rota" (endereço completo ou "lat,lng"). EDITAR com o endereço exato.
+  mapDestination: "Araucária, Paraná, Brasil",
+
   // 🗺️ Cidades atendidas (chips do mapa) — EDITÁVEL
   regionCities: [
     "Curitiba","Araucária","São José dos Pinhais","Colombo","Pinhais",
@@ -331,6 +345,8 @@ function wireTracking() {
       track("whatsapp_click", { location: labelOf(el) });
     } else if (el.closest("[data-tel]")) {
       track("phone_click", { location: labelOf(el) });
+    } else if (el.matches("#routeBtn")) {
+      track("route_click", {});
     } else if (el.matches(".faq-q")) {
       track("faq_open", { question: (el.textContent || "").trim().slice(0, 60) });
     } else if (el.matches(".nav-link, .m-link")) {
@@ -506,9 +522,47 @@ function wireCmpTabs() {
 
 function renderRegion() {
   const el = document.getElementById("regionChips");
-  if (!el) return;
-  el.innerHTML = CONFIG.regionCities.map((c) =>
-    `<span class="region-chip" data-testid="region-chip">${c}</span>`).join("");
+  if (el) {
+    el.innerHTML = CONFIG.regionCities.map((c) =>
+      `<span class="region-chip" data-testid="region-chip">${c}</span>`).join("");
+  }
+  renderHours();
+  const rb = document.getElementById("routeBtn");
+  if (rb && CONFIG.mapDestination) {
+    rb.setAttribute("href", "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(CONFIG.mapDestination));
+  }
+}
+
+function statusNow() {
+  const H = CONFIG.hours;
+  if (!H) return null;
+  const now = new Date();
+  const cur = now.getHours() * 60 + now.getMinutes();
+  const toMin = (s) => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
+  const today = H[now.getDay()];
+  const open = !!(today && today !== "closed" && cur >= toMin(today.open) && cur < toMin(today.close));
+  return { open };
+}
+
+function renderHours() {
+  const H = CONFIG.hours;
+  if (!H) return;
+  const names = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  const dToday = new Date().getDay();
+  const list = document.getElementById("regionHours");
+  if (list) {
+    list.innerHTML = [1, 2, 3, 4, 5, 6, 0].map((d) => {
+      const v = H[d];
+      const txt = (v && v !== "closed") ? `${v.open} – ${v.close}` : "Fechado";
+      return `<div class="hrow${d === dToday ? " today" : ""}"><span>${names[d]}</span><span>${txt}</span></div>`;
+    }).join("");
+  }
+  const badge = document.getElementById("hoursStatus");
+  const st = statusNow();
+  if (badge && st) {
+    badge.textContent = st.open ? "Aberto agora" : "Fechado agora";
+    badge.className = "hours-status " + (st.open ? "open" : "closed");
+  }
 }
 
 function renderFaq() {

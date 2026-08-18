@@ -31,6 +31,41 @@
 
     <!-- ================= Styles ================= -->
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- ================= Dados estruturados (SEO) — EDITE endereço/telefone conforme necessário ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoRepair",
+      "name": "Precision Automotive Brasil",
+      "image": "assets/images/logo-circle.png",
+      "description": "Diagnóstico eletrônico automotivo, scanner multimarcas, codificação e personalização em Curitiba, Araucária e região.",
+      "telephone": "+5541997548811",
+      "url": "https://precisionautomotive.com.br/",
+      "priceRange": "$$",
+      "areaServed": ["Curitiba", "Araucária", "Região Metropolitana de Curitiba"],
+      "address": { "@type": "PostalAddress", "addressLocality": "Araucária", "addressRegion": "PR", "addressCountry": "BR" },
+      "sameAs": ["https://instagram.com/precisionautobrasil"],
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "12:00" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "O que é o Protocolo FCA/SGW (Security Gateway) da Stellantis?", "acceptedAnswer": { "@type": "Answer", "text": "É o módulo de segurança presente nos veículos da linha Stellantis (Jeep, Fiat, RAM, Dodge, Chrysler e modelos recentes de Peugeot/Citroën) a partir de ~2018, que bloqueia o acesso dos scanners às funções bidirecionais. Para um diagnóstico completo é necessário liberar o gateway de forma autorizada." } },
+        { "@type": "Question", "name": "Vocês executam o desbloqueio / liberação do FCA/SGW?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. Executamos o procedimento de acesso ao Security Gateway da linha Stellantis, permitindo leitura completa, testes de atuadores, resets e codificações." } },
+        { "@type": "Question", "name": "O que é o scanner Thinkcar 689BT?", "acceptedAnswer": { "@type": "Answer", "text": "É um scanner automotivo profissional multimarcas com Bluetooth: diagnóstico de todos os sistemas, leitura/apagamento de falhas, dados em tempo real, testes ativos, codificação e serviços de reset." } },
+        { "@type": "Question", "name": "O Thinkcar 689BT acessa o Security Gateway da Stellantis?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O equipamento suporta o procedimento de gateway FCA/SGW, liberando o diagnóstico completo e as funções bidirecionais nos veículos Stellantis compatíveis." } },
+        { "@type": "Question", "name": "Quais funções o 689BT consegue executar?", "acceptedAnswer": { "@type": "Answer", "text": "Diagnóstico completo, leitura/limpeza de falhas, dados em tempo real, testes de atuadores, codificação e programação de módulos, e resets como óleo, EPB, TPMS e SAS, conforme a compatibilidade." } },
+        { "@type": "Question", "name": "Emitem Nota Fiscal do serviço?", "acceptedAnswer": { "@type": "Answer", "text": "Sim, emitimos Nota Fiscal de todos os serviços. CNPJ 68.332.596/0001-60." } }
+      ]
+    }
+    </script>
   </head>
 
   <body>
@@ -378,16 +413,25 @@
           </div>
 
           <div class="region-info reveal">
-            <h3>Cidades atendidas</h3>
+            <div class="region-top">
+              <h3>Cidades atendidas</h3>
+              <span class="hours-status" id="hoursStatus" data-testid="hours-status"></span>
+            </div>
             <p class="region-desc">
               Diagnóstico eletrônico para veículos modernos em Curitiba e cidades vizinhas.
               Consulte a disponibilidade de atendimento móvel para a sua região.
             </p>
             <!-- CIDADES EDITÁVEIS EM CONFIG.regionCities (js/script.js) -->
             <div class="region-chips" id="regionChips" data-testid="region-chips"></div>
-            <a href="#" class="btn btn-primary" data-wa
-               data-wa-msg="Olá! Vim pelo site da Precision Automotive. Vocês atendem na minha região? Minha cidade/bairro é: "
-               data-testid="region-wa-btn">Consultar minha região <i class="ico ico-wa"></i></a>
+            <!-- HORÁRIOS EDITÁVEIS EM CONFIG.hours (js/script.js) -->
+            <div class="region-hours" id="regionHours" data-testid="region-hours"></div>
+            <div class="region-actions">
+              <a href="#" class="btn btn-primary" data-wa
+                 data-wa-msg="Olá! Vim pelo site da Precision Automotive. Vocês atendem na minha região? Minha cidade/bairro é: "
+                 data-testid="region-wa-btn">Consultar região <i class="ico ico-wa"></i></a>
+              <!-- DESTINO DA ROTA EDITÁVEL EM CONFIG.mapDestination (js/script.js) -->
+              <a href="#" class="btn btn-ghost" id="routeBtn" target="_blank" rel="noopener" data-testid="route-btn"><i class="ico ico-pin"></i> Traçar rota</a>
+            </div>
           </div>
         </div>
       </div>

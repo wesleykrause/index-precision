@@ -491,6 +491,18 @@ img{max-width:100%;display:block}
   font-size:11px;font-weight:700;margin-top:1px}
 .feat-mark.yes{background:var(--red-soft);color:var(--red-2)}
 .feat-mark.no{background:rgba(255,255,255,.05);color:var(--muted-2)}
+.feat-mark.opc{background:rgba(245,179,1,.16);color:var(--gold)}
+.plan-feats li.opc{color:var(--muted)}
+.opc-tag{font-family:var(--ff-tech);font-size:9.5px;letter-spacing:.05em;color:var(--gold);
+  border:1px solid rgba(245,179,1,.45);border-radius:100px;padding:1px 7px;margin-left:4px;white-space:nowrap}
+.plan-addon{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 20px;
+  padding:12px 14px;border:1px dashed rgba(245,179,1,.5);border-radius:12px;background:rgba(245,179,1,.06);
+  transition:background-color .3s,border-color .3s,transform .3s var(--ease)}
+.plan-addon:hover{background:rgba(245,179,1,.12);border-color:var(--gold);transform:translateY(-2px)}
+.plan-addon .addon-l{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)}
+.plan-addon .addon-l em{color:var(--gold);font-style:normal;font-size:11px}
+.addon-plus{font-style:normal;color:var(--gold);font-weight:700}
+.addon-price{font-family:var(--ff-display);font-size:16px;color:#fff;white-space:nowrap}
 
 .cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
 .cmp-table{width:100%;border-collapse:collapse;min-width:580px}
@@ -503,6 +515,7 @@ img{max-width:100%;display:block}
 .cmp-yes{color:var(--red-2);font-weight:700;font-size:16px}
 .cmp-no{color:var(--muted-2);font-size:16px}
 .cmp-note{color:var(--muted);font-size:12.5px}
+.cmp-opc{color:var(--gold);font-family:var(--ff-tech);font-size:11px;letter-spacing:.05em}
 
 /* ---------------- RESPONSIVE ---------------- */
 @media(max-width:1024px){
@@ -1234,6 +1247,20 @@ const CONFIG = {
 
   /* ---------------- COMPARAÇÃO (Planos + Scanner + Recursos) — EDITÁVEL ---------------- */
   comparison: {
+    // 🏷️ SELO POPULAR DINÂMICO — troque o índice p/ destacar outro plano.
+    //    0 = Essencial | 1 = Completo | 2 = Premium | -1 = nenhum selo.
+    popularIndex: 1,
+    popularLabel: "Mais escolhido",
+
+    // ➕ ADD-ON OPCIONAL (aparece dentro dos planos cujo recurso "featureIndex" for "opc")
+    addon: {
+      label: "Regeneração de DPF",
+      note: "opcional",
+      price: "249,90",
+      featureIndex: 9,
+      msg: "Olá! Vim pelo site da Precision Automotive e quero adicionar a Regeneração de DPF ao meu plano.",
+    },
+
     // Lista canônica de recursos (usada nos planos e na matriz)
     features: [
       "Leitura e apagamento de falhas",
@@ -1245,18 +1272,19 @@ const CONFIG = {
       "Personalização de funções",
       "Relatório técnico",
       "Nota Fiscal",
+      "Regeneração de DPF",
     ],
-    // Planos — preços e recursos (true/false na ordem de "features")
+    // Planos — recursos na ordem de "features". Use: true, false ou "opc" (add-on opcional).
     plans: [
       { name: "Essencial", title: "Check-up Eletrônico", price: "69,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Check-up Eletrônico (Essencial).",
-        feats: [true, true, false, false, false, false, false, false, true] },
-      { name: "Completo", title: "Diagnóstico Completo", price: "159,90", popular: true,
+        feats: [true, true, false, false, false, false, false, false, true, false] },
+      { name: "Completo", title: "Diagnóstico Completo", price: "159,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Diagnóstico Completo.",
-        feats: [true, true, true, true, true, false, false, true, true] },
+        feats: [true, true, true, true, true, false, false, true, true, "opc"] },
       { name: "Premium", title: "Completo + Codificação", price: "199,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Completo + Codificação (Premium).",
-        feats: [true, true, true, true, true, true, true, true, true] },
+        feats: [true, true, true, true, true, true, true, true, true, "opc"] },
     ],
     // Scanner Thinkcar 689BT x Scanner comum. Use "yes", "no" ou um texto livre.
     scanner: {
@@ -1345,7 +1373,9 @@ function wireTracking() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("a, button");
     if (!el) return;
-    if (el.closest("[data-testid^='plan-quote-']")) {
+    if (el.closest("[data-testid^='plan-addon-']")) {
+      track("plan_addon_click", { addon: "dpf" });
+    } else if (el.closest("[data-testid^='plan-quote-']")) {
       track("plan_quote_click", { plan: labelOf(el).replace("plan-quote-", "") });
     } else if (el.closest("[data-testid^='service-quote-']")) {
       track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
@@ -1456,20 +1486,30 @@ function renderTestimonials() {
 function renderComparison() {
   const C = CONFIG.comparison;
   if (!C) return;
+  const popIdx = (typeof C.popularIndex === "number") ? C.popularIndex : -1;
 
   const pl = document.getElementById("cmpPlans");
   if (pl) {
-    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => `
-      <div class="plan${p.popular ? " popular" : ""}" data-testid="plan-${pi}">
-        ${p.popular ? '<span class="plan-badge">Mais escolhido</span>' : ""}
+    const featMark = (v) => v === "opc"
+      ? '<span class="feat-mark opc">＋</span>'
+      : (v ? '<span class="feat-mark yes">✓</span>' : '<span class="feat-mark no">—</span>');
+    const featClass = (v) => v === "opc" ? "opc" : (v ? "" : "no");
+    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => {
+      const pop = pi === popIdx;
+      const showAddon = C.addon && p.feats[C.addon.featureIndex] === "opc";
+      return `
+      <div class="plan${pop ? " popular" : ""}" data-testid="plan-${pi}">
+        ${pop ? `<span class="plan-badge">${C.popularLabel || "Mais escolhido"}</span>` : ""}
         <span class="plan-name">${p.name}</span>
         <div class="plan-title">${p.title}</div>
         <div class="plan-price"><span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
         <ul class="plan-feats">
-          ${C.features.map((f, fi) => `<li class="${p.feats[fi] ? "" : "no"}"><span class="feat-mark ${p.feats[fi] ? "yes" : "no"}">${p.feats[fi] ? "✓" : "—"}</span>${f}</li>`).join("")}
+          ${C.features.map((f, fi) => `<li class="${featClass(p.feats[fi])}">${featMark(p.feats[fi])}<span>${f}${p.feats[fi] === "opc" ? ' <em class="opc-tag">opcional</em>' : ""}</span></li>`).join("")}
         </ul>
-        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${p.popular ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
-      </div>`).join("") + "</div>";
+        ${showAddon ? `<a href="${waLink(C.addon.msg)}" target="_blank" rel="noopener" class="plan-addon" data-testid="plan-addon-${pi}"><span class="addon-l"><i class="addon-plus">＋</i> ${C.addon.label} <em>(${C.addon.note})</em></span><span class="addon-price">R$ ${C.addon.price}</span></a>` : ""}
+        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${pop ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
+      </div>`;
+    }).join("") + "</div>";
   }
 
   const cell = (v) => v === "yes"
@@ -1487,11 +1527,14 @@ function renderComparison() {
 
   const mx = document.getElementById("cmpMatrix");
   if (mx) {
+    const mcell = (v) => v === "opc"
+      ? '<span class="cmp-opc">Opcional</span>'
+      : (v ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>');
     mx.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th>Recurso</th>' +
-      C.plans.map((p) => `<th class="center${p.popular ? " col-hi" : ""}">${p.title}</th>`).join("") +
+      C.plans.map((p, pi) => `<th class="center${pi === popIdx ? " col-hi" : ""}">${p.title}</th>`).join("") +
       "</tr></thead><tbody>" +
       C.features.map((f, fi) => `<tr><td>${f}</td>` +
-        C.plans.map((p) => `<td class="center">${p.feats[fi] ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>'}</td>`).join("") +
+        C.plans.map((p) => `<td class="center">${mcell(p.feats[fi])}</td>`).join("") +
         "</tr>").join("") +
       "</tbody></table></div>";
   }

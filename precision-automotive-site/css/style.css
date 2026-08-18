@@ -458,6 +458,18 @@ img{max-width:100%;display:block}
   font-size:11px;font-weight:700;margin-top:1px}
 .feat-mark.yes{background:var(--red-soft);color:var(--red-2)}
 .feat-mark.no{background:rgba(255,255,255,.05);color:var(--muted-2)}
+.feat-mark.opc{background:rgba(245,179,1,.16);color:var(--gold)}
+.plan-feats li.opc{color:var(--muted)}
+.opc-tag{font-family:var(--ff-tech);font-size:9.5px;letter-spacing:.05em;color:var(--gold);
+  border:1px solid rgba(245,179,1,.45);border-radius:100px;padding:1px 7px;margin-left:4px;white-space:nowrap}
+.plan-addon{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-4px 0 20px;
+  padding:12px 14px;border:1px dashed rgba(245,179,1,.5);border-radius:12px;background:rgba(245,179,1,.06);
+  transition:background-color .3s,border-color .3s,transform .3s var(--ease)}
+.plan-addon:hover{background:rgba(245,179,1,.12);border-color:var(--gold);transform:translateY(-2px)}
+.plan-addon .addon-l{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text)}
+.plan-addon .addon-l em{color:var(--gold);font-style:normal;font-size:11px}
+.addon-plus{font-style:normal;color:var(--gold);font-weight:700}
+.addon-price{font-family:var(--ff-display);font-size:16px;color:#fff;white-space:nowrap}
 
 .cmp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface)}
 .cmp-table{width:100%;border-collapse:collapse;min-width:580px}
@@ -470,6 +482,7 @@ img{max-width:100%;display:block}
 .cmp-yes{color:var(--red-2);font-weight:700;font-size:16px}
 .cmp-no{color:var(--muted-2);font-size:16px}
 .cmp-note{color:var(--muted);font-size:12.5px}
+.cmp-opc{color:var(--gold);font-family:var(--ff-tech);font-size:11px;letter-spacing:.05em}
 
 /* ---------------- RESPONSIVE ---------------- */
 @media(max-width:1024px){

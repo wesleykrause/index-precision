@@ -179,6 +179,20 @@ const CONFIG = {
 
   /* ---------------- COMPARAÇÃO (Planos + Scanner + Recursos) — EDITÁVEL ---------------- */
   comparison: {
+    // 🏷️ SELO POPULAR DINÂMICO — troque o índice p/ destacar outro plano.
+    //    0 = Essencial | 1 = Completo | 2 = Premium | -1 = nenhum selo.
+    popularIndex: 1,
+    popularLabel: "Mais escolhido",
+
+    // ➕ ADD-ON OPCIONAL (aparece dentro dos planos cujo recurso "featureIndex" for "opc")
+    addon: {
+      label: "Regeneração de DPF",
+      note: "opcional",
+      price: "249,90",
+      featureIndex: 9,
+      msg: "Olá! Vim pelo site da Precision Automotive e quero adicionar a Regeneração de DPF ao meu plano.",
+    },
+
     // Lista canônica de recursos (usada nos planos e na matriz)
     features: [
       "Leitura e apagamento de falhas",
@@ -190,18 +204,19 @@ const CONFIG = {
       "Personalização de funções",
       "Relatório técnico",
       "Nota Fiscal",
+      "Regeneração de DPF",
     ],
-    // Planos — preços e recursos (true/false na ordem de "features")
+    // Planos — recursos na ordem de "features". Use: true, false ou "opc" (add-on opcional).
     plans: [
       { name: "Essencial", title: "Check-up Eletrônico", price: "69,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Check-up Eletrônico (Essencial).",
-        feats: [true, true, false, false, false, false, false, false, true] },
-      { name: "Completo", title: "Diagnóstico Completo", price: "159,90", popular: true,
+        feats: [true, true, false, false, false, false, false, false, true, false] },
+      { name: "Completo", title: "Diagnóstico Completo", price: "159,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Diagnóstico Completo.",
-        feats: [true, true, true, true, true, false, false, true, true] },
+        feats: [true, true, true, true, true, false, false, true, true, "opc"] },
       { name: "Premium", title: "Completo + Codificação", price: "199,90",
         msg: "Olá! Vim pelo site da Precision Automotive e quero o plano Completo + Codificação (Premium).",
-        feats: [true, true, true, true, true, true, true, true, true] },
+        feats: [true, true, true, true, true, true, true, true, true, "opc"] },
     ],
     // Scanner Thinkcar 689BT x Scanner comum. Use "yes", "no" ou um texto livre.
     scanner: {
@@ -290,7 +305,9 @@ function wireTracking() {
   document.addEventListener("click", (e) => {
     const el = e.target.closest("a, button");
     if (!el) return;
-    if (el.closest("[data-testid^='plan-quote-']")) {
+    if (el.closest("[data-testid^='plan-addon-']")) {
+      track("plan_addon_click", { addon: "dpf" });
+    } else if (el.closest("[data-testid^='plan-quote-']")) {
       track("plan_quote_click", { plan: labelOf(el).replace("plan-quote-", "") });
     } else if (el.closest("[data-testid^='service-quote-']")) {
       track("service_quote_click", { service: labelOf(el).replace("service-quote-", "") });
@@ -401,20 +418,30 @@ function renderTestimonials() {
 function renderComparison() {
   const C = CONFIG.comparison;
   if (!C) return;
+  const popIdx = (typeof C.popularIndex === "number") ? C.popularIndex : -1;
 
   const pl = document.getElementById("cmpPlans");
   if (pl) {
-    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => `
-      <div class="plan${p.popular ? " popular" : ""}" data-testid="plan-${pi}">
-        ${p.popular ? '<span class="plan-badge">Mais escolhido</span>' : ""}
+    const featMark = (v) => v === "opc"
+      ? '<span class="feat-mark opc">＋</span>'
+      : (v ? '<span class="feat-mark yes">✓</span>' : '<span class="feat-mark no">—</span>');
+    const featClass = (v) => v === "opc" ? "opc" : (v ? "" : "no");
+    pl.innerHTML = '<div class="plans-grid stagger">' + C.plans.map((p, pi) => {
+      const pop = pi === popIdx;
+      const showAddon = C.addon && p.feats[C.addon.featureIndex] === "opc";
+      return `
+      <div class="plan${pop ? " popular" : ""}" data-testid="plan-${pi}">
+        ${pop ? `<span class="plan-badge">${C.popularLabel || "Mais escolhido"}</span>` : ""}
         <span class="plan-name">${p.name}</span>
         <div class="plan-title">${p.title}</div>
         <div class="plan-price"><span class="from">a partir de</span><span class="val">R$ ${p.price}</span></div>
         <ul class="plan-feats">
-          ${C.features.map((f, fi) => `<li class="${p.feats[fi] ? "" : "no"}"><span class="feat-mark ${p.feats[fi] ? "yes" : "no"}">${p.feats[fi] ? "✓" : "—"}</span>${f}</li>`).join("")}
+          ${C.features.map((f, fi) => `<li class="${featClass(p.feats[fi])}">${featMark(p.feats[fi])}<span>${f}${p.feats[fi] === "opc" ? ' <em class="opc-tag">opcional</em>' : ""}</span></li>`).join("")}
         </ul>
-        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${p.popular ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
-      </div>`).join("") + "</div>";
+        ${showAddon ? `<a href="${waLink(C.addon.msg)}" target="_blank" rel="noopener" class="plan-addon" data-testid="plan-addon-${pi}"><span class="addon-l"><i class="addon-plus">＋</i> ${C.addon.label} <em>(${C.addon.note})</em></span><span class="addon-price">R$ ${C.addon.price}</span></a>` : ""}
+        <a href="${waLink(p.msg)}" target="_blank" rel="noopener" class="btn ${pop ? "btn-primary" : "btn-ghost"} btn-block" data-testid="plan-quote-${pi}">Escolher plano <i class="ico ico-wa"></i></a>
+      </div>`;
+    }).join("") + "</div>";
   }
 
   const cell = (v) => v === "yes"
@@ -432,11 +459,14 @@ function renderComparison() {
 
   const mx = document.getElementById("cmpMatrix");
   if (mx) {
+    const mcell = (v) => v === "opc"
+      ? '<span class="cmp-opc">Opcional</span>'
+      : (v ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>');
     mx.innerHTML = '<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th>Recurso</th>' +
-      C.plans.map((p) => `<th class="center${p.popular ? " col-hi" : ""}">${p.title}</th>`).join("") +
+      C.plans.map((p, pi) => `<th class="center${pi === popIdx ? " col-hi" : ""}">${p.title}</th>`).join("") +
       "</tr></thead><tbody>" +
       C.features.map((f, fi) => `<tr><td>${f}</td>` +
-        C.plans.map((p) => `<td class="center">${p.feats[fi] ? '<span class="cmp-yes">✓</span>' : '<span class="cmp-no">—</span>'}</td>`).join("") +
+        C.plans.map((p) => `<td class="center">${mcell(p.feats[fi])}</td>`).join("") +
         "</tr>").join("") +
       "</tbody></table></div>";
   }
